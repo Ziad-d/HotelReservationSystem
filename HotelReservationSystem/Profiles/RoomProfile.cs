@@ -1,6 +1,8 @@
-﻿namespace HotelReservationSystem.Profiles
+﻿using AutoMapper;
+
+namespace HotelReservationSystem.Profiles
 {
-    public class RoomProfile
+    public class RoomProfile : Profile
     {
     }
 }
