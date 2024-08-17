@@ -53,6 +53,9 @@ namespace HotelReservationSystem.Data.Migrations
                     b.Property<int>("RoomType")
                         .HasColumnType("int");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.HasKey("ID");
 
                     b.ToTable("Rooms");
