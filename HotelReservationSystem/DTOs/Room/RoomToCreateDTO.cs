@@ -1,8 +1,8 @@
 ﻿using HotelReservationSystem.Enums;
 
-namespace HotelReservationSystem.Models
+namespace HotelReservationSystem.DTOs.Room
 {
-    public class Room : BaseModel
+    public class RoomToCreateDTO
     {
         public decimal Price { get; set; }
         public string PictureUrl { get; set; } = string.Empty;

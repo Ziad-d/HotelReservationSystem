@@ -1,6 +1,9 @@
 using Autofac.Extensions.DependencyInjection;
 using Autofac;
 using ExaminationSystem;
+using HotelReservationSystem.Profiles;
+using AutoMapper;
+using ExaminationSystem.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +19,11 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
     builder.RegisterModule(new AutofacModule()));
 
+builder.Services.AddAutoMapper(typeof(RoomProfile));
+
 var app = builder.Build();
+
+MapperHelper.Mapper = app.Services.GetService<IMapper>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
