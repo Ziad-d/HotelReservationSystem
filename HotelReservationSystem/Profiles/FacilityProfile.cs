@@ -5,13 +5,12 @@ using HotelReservationSystem.ViewModels.Room;
 
 namespace HotelReservationSystem.Profiles
 {
-    public class RoomProfile : Profile
+    public class FacilityProfile : Profile
     {
-        public RoomProfile() 
+        public FacilityProfile() 
         {
-            CreateMap<RoomToCreateDTO, Room>().ReverseMap();
-            CreateMap<RoomToCreateViewModel, FacilityDto>();
-            
+            CreateMap<FacilityDto, Facility>().ReverseMap();
+            CreateMap<FacilityViewModel, FacilityDto>();
         }
     }
 }

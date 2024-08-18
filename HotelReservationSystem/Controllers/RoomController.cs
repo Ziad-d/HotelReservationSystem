@@ -1,5 +1,7 @@
 ﻿using ExaminationSystem.Helpers;
 using HotelReservationSystem.DTOs.Room;
+using HotelReservationSystem.Enums;
+using HotelReservationSystem.Models;
 using HotelReservationSystem.Services.Rooms;
 using HotelReservationSystem.ViewModels.Room;
 using Microsoft.AspNetCore.Http;
@@ -16,6 +18,26 @@ namespace HotelReservationSystem.Controllers
         public RoomController(IRoomService roomService)
         {
             this.roomService = roomService;
+        }
+        [HttpGet]
+        public IEnumerable<RoomToCreateDTO> GetAllRooms()
+        {
+            var rooms = roomService.GetRooms();
+            return rooms;
+        }
+
+        [HttpGet("id")]
+        public RoomToCreateDTO GetRoomById(int id)
+        {
+            var room = roomService.GetRoomById(id);
+            return room;
+        }
+
+        [HttpGet("Available Rooms")]
+        public IEnumerable<RoomToCreateDTO> GetAvailableRooms()
+        {
+            var room = roomService.GetAvailableRooms();
+            return room;
         }
 
         [HttpPost]

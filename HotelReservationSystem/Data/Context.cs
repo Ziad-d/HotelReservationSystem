@@ -1,4 +1,4 @@
-﻿using HotelReservationSystem.Models;
+﻿using HotelReservationSystem.Models.Room;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Reflection;
@@ -8,6 +8,7 @@ namespace HotelReservationSystem.Data
     public class Context : DbContext
     {
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<Facility> Facilities { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
