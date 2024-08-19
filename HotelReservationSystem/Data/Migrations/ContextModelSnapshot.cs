@@ -55,7 +55,7 @@ namespace HotelReservationSystem.Data.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Rooms", (string)null);
                 });
 #pragma warning restore 612, 618
         }
