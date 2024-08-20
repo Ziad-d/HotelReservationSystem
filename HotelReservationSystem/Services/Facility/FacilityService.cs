@@ -15,23 +15,37 @@ namespace HotelReservationSystem.Services.Rooms
             this.repository = repository;
         }
         
-        public void Add(FacilityDto facilityDto)
+        public void Add(FacilityToCreateDTO facilityDTO)
         {
-            var facility = facilityDto.MapOne<Facility>();
+            var facility = facilityDTO.MapOne<Facility>();
             repository.Add(facility);
             repository.SaveChanges();
         }
 
-        public IEnumerable<FacilityDto> GetAllFacilities()
+        public IEnumerable<FacilityToReturnDTO> GetAllFacilities()
         {
             var facilities = repository.GetAll();
-            return facilities.Map<FacilityDto>();
+            return facilities.Map<FacilityToReturnDTO>();
         }
 
-        public FacilityDto GetFacilityById(int id)
+        public FacilityToReturnDTO GetFacilityById(int id)
         {
             var facility = repository.GetByIDWithTracking(id);
-            return facility.MapOne<FacilityDto>();
+            return facility.MapOne<FacilityToReturnDTO>();
+        }
+
+        public void Update(int id, FacilityToUpdateDTO facilityDTO)
+        {
+            var facility = repository.GetByIDWithTracking(id) ?? throw new KeyNotFoundException("Facility not found");
+            facilityDTO.MapOne(facility);
+            repository.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            var facility = repository.GetByIDWithTracking(id);
+            repository.Delete(facility);
+            repository.SaveChanges();
         }
     }
     

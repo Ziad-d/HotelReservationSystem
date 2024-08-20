@@ -9,8 +9,14 @@ namespace HotelReservationSystem.Profiles
     {
         public FacilityProfile() 
         {
-            CreateMap<FacilityDto, Facility>().ReverseMap();
-            CreateMap<FacilityViewModel, FacilityDto>();
+            CreateMap<FacilityToCreateDTO, Facility>().ReverseMap();
+            CreateMap<FacilityToCreateViewModel, FacilityToCreateDTO>();
+
+            CreateMap<FacilityToReturnDTO, Facility>().ReverseMap();
+            CreateMap<FacilityToReturnViewModel, FacilityToReturnDTO>().ReverseMap();
+
+            CreateMap<FacilityToUpdateDTO, Facility>().ReverseMap();
+            CreateMap<FacilityToUpdateViewModel, FacilityToUpdateDTO>().ReverseMap();
         }
     }
 }

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HotelReservationSystem.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]/[action]")]
     [ApiController]
     public class FacilityController : ControllerBase
     {
@@ -19,27 +19,43 @@ namespace HotelReservationSystem.Controllers
         {
             this.facilityService = facilityService;
         }
+
         [HttpGet]
-        public IEnumerable<FacilityDto> GetAllFacilities()
+        public IEnumerable<FacilityToReturnViewModel> GetAllFacilities()
         {
             var facilities = facilityService.GetAllFacilities();
-            return facilities;
+            return facilities.Select(x => x.MapOne<FacilityToReturnViewModel>());
             
         }
 
-        [HttpGet("id")]
-        public FacilityDto GetRoomById(int id)
+        [HttpGet("{id}")]
+        public FacilityToReturnViewModel GetFacilityById(int id)
         {
             var facility = facilityService.GetFacilityById(id);
-            return facility;
+            return facility.MapOne<FacilityToReturnViewModel>();
         }
 
 
         [HttpPost]
-        public bool Create(FacilityViewModel viewModel)
+        public bool CreateFacility(FacilityToCreateViewModel viewModel)
         {
-            var facility = viewModel.MapOne<FacilityDto>();
+            var facility = viewModel.MapOne<FacilityToCreateDTO>();
             facilityService.Add(facility);
+            return true;
+        }
+
+        [HttpPut]
+        public bool UpdateFacility(int id, FacilityToUpdateViewModel viewModel)
+        {
+            var facilityDTO = viewModel.MapOne<FacilityToUpdateDTO>();
+            facilityService.Update(id, facilityDTO);
+            return true;
+        }
+
+        [HttpDelete("{id}")]
+        public bool Delete(int id)
+        {
+            facilityService.Delete(id);
             return true;
         }
     }
