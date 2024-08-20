@@ -1,5 +1,8 @@
 ﻿using ExaminationSystem.Helpers;
 using HotelReservationSystem.DTOs.Room;
+using HotelReservationSystem.Enums;
+using HotelReservationSystem.Models;
+using HotelReservationSystem.Models.Room;
 using HotelReservationSystem.Services.Rooms;
 using HotelReservationSystem.ViewModels.Room;
 using Microsoft.AspNetCore.Http;
@@ -7,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HotelReservationSystem.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]/[action]")]
     [ApiController]
     public class RoomController : ControllerBase
     {
@@ -17,9 +20,29 @@ namespace HotelReservationSystem.Controllers
         {
             this.roomService = roomService;
         }
+        [HttpGet]
+        public IEnumerable<RoomToReturnViewModel> GetAllRooms()
+        {
+            var rooms = roomService.GetRooms();
+            return rooms.Select(x => x.MapOne<RoomToReturnViewModel>());
+        }
+
+        [HttpGet("{id}")]
+        public RoomToReturnViewModel GetRoomById(int id)
+        {
+            var room = roomService.GetRoomById(id);
+            return room.MapOne<RoomToReturnViewModel>();
+        }
+
+        [HttpGet]
+        public IEnumerable<RoomToReturnViewModel> GetAvailableRooms()
+        {
+            var rooms = roomService.GetAvailableRooms();
+            return rooms.Select(x => x.MapOne<RoomToReturnViewModel>());
+        }
 
         [HttpPost]
-        public bool Create(RoomToCreateViewModel viewModel)
+        public bool CreateRoom(RoomToCreateViewModel viewModel)
         {
             var room = viewModel.MapOne<RoomToCreateDTO>();
             roomService.Add(room);
@@ -27,17 +50,12 @@ namespace HotelReservationSystem.Controllers
         }
 
         [HttpPut]
-        public IActionResult Update(int id, RoomToUpdateViewModel viewModel)
+        public bool Update(int id, RoomToUpdateViewModel viewModel)
         {
-            if (id != viewModel.ID)
-            {
-                return BadRequest("Room ID mismatch");
-            }
-
             var roomDTO = viewModel.MapOne<RoomToUpdateDTO>();
-            roomService.Update(roomDTO);
+            roomService.Update(id, roomDTO);
 
-            return Ok();
+            return true;
         }
     }
 }

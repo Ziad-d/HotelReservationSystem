@@ -1,9 +1,9 @@
 ﻿using HotelReservationSystem.Enums;
 using HotelReservationSystem.Models.Room;
 
-namespace HotelReservationSystem.DTOs.Room
+namespace HotelReservationSystem.ViewModels.Room
 {
-    public class RoomToUpdateDTO
+    public class RoomToReturnViewModel
     {
         public decimal Price { get; set; }
         public string PictureUrl { get; set; } = string.Empty;
