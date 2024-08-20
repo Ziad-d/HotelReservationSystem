@@ -11,6 +11,8 @@ namespace HotelReservationSystem.Profiles
         {
             CreateMap<RoomToCreateDTO, Room>().ReverseMap();
             CreateMap<RoomToCreateViewModel, RoomToCreateDTO>();
+            CreateMap<RoomToUpdateViewModel, RoomToUpdateDTO>();
+            
             
         }
     }

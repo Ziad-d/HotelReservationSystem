@@ -47,5 +47,19 @@ namespace HotelReservationSystem.Controllers
             roomService.Add(room);
             return true;
         }
+
+        [HttpPut]
+        public IActionResult Update(int id, RoomToUpdateViewModel viewModel)
+        {
+            if (id != viewModel.ID)
+            {
+                return BadRequest("Room ID mismatch");
+            }
+
+            var roomDTO = viewModel.MapOne<RoomToUpdateDTO>();
+            roomService.Update(roomDTO);
+
+            return Ok();
+        }
     }
 }
