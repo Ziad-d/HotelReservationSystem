@@ -4,28 +4,29 @@ using HotelReservationSystem.Enums;
 using HotelReservationSystem.Models;
 using HotelReservationSystem.Models.Room;
 using HotelReservationSystem.Repositories;
+using HotelReservationSystem.Repositories.UnitOfWork;
 
 namespace HotelReservationSystem.Services.Rooms
 {
     public class RoomService : IRoomService
     {
-        private readonly IRepository<Room> _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public RoomService(IRepository<Room> repository)
+        public RoomService(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public void Add(RoomToCreateDTO roomDTO)
         {
             var room = roomDTO.MapOne<Room>();
-            _repository.Add(room);
-            _repository.SaveChanges();
+            _unitOfWork.GetRepo<Room>().Add(room);
+            _unitOfWork.GetRepo<Room>().SaveChanges();
         }
 
         public void Update(int id, RoomToUpdateDTO roomDTO)
         {
-            var room = _repository.GetByIDWithTracking(id) ?? throw new KeyNotFoundException("Room not found");
+            var room = _unitOfWork.GetRepo<Room>().GetByIDWithTracking(id) ?? throw new KeyNotFoundException("Room not found");
 
             //room.Price = roomDTO.Price;
             //room.PictureUrl = roomDTO.PictureUrl;
@@ -36,33 +37,33 @@ namespace HotelReservationSystem.Services.Rooms
 
             //_repository.Update(room);
             roomDTO.MapOne(room);
-            _repository.SaveChanges();
+            _unitOfWork.GetRepo<Room>().SaveChanges();
         }
 
         public IEnumerable<RoomToReturnDTO> GetAvailableRooms()
         {
-            var availableRooms = _repository.Get(r => r.IsAvailable == true);
+            var availableRooms = _unitOfWork.GetRepo<Room>().Get(r => r.IsAvailable == true);
 
             return availableRooms.Map<RoomToReturnDTO>();
         }
 
         public RoomToReturnDTO GetRoomById(int id)
         {
-            var room = _repository.GetByIDWithTracking(id);
+            var room = _unitOfWork.GetRepo<Room>().GetByIDWithTracking(id);
             return room.MapOne<RoomToReturnDTO>();
         }
 
         public IEnumerable<RoomToReturnDTO> GetRooms()
         {
-            var rooms = _repository.GetAll();
+            var rooms = _unitOfWork.GetRepo<Room>().GetAll();
             return rooms.Map<RoomToReturnDTO>();
         }
 
         public void Delete(int id)
         {
-            var room = _repository.GetByIDWithTracking(id);
-            _repository.Delete(room);
-            _repository.SaveChanges();
+            var room = _unitOfWork.GetRepo<Room>().GetByIDWithTracking(id);
+            _unitOfWork.GetRepo<Room>().Delete(room);
+            _unitOfWork.GetRepo<Room>().SaveChanges();
         }
     }
 }

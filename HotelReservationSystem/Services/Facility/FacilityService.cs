@@ -3,49 +3,50 @@ using ExaminationSystem.Helpers;
 using HotelReservationSystem.DTOs.Room;
 using HotelReservationSystem.Models.Room;
 using HotelReservationSystem.Repositories;
+using HotelReservationSystem.Repositories.UnitOfWork;
 
 namespace HotelReservationSystem.Services.Rooms
 {
     public class FacilityService : IFacilityService
     {
-        private readonly IRepository<Facility> _repository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public FacilityService(IRepository<Facility> repository)
+        public FacilityService(IUnitOfWork unitOfWork)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
         }
         
         public void Add(FacilityToCreateDTO facilityDTO)
         {
             var facility = facilityDTO.MapOne<Facility>();
-            _repository.Add(facility);
-            _repository.SaveChanges();
+            _unitOfWork.GetRepo<Facility>().Add(facility);
+            _unitOfWork.GetRepo<Facility>().SaveChanges();
         }
 
         public IEnumerable<FacilityToReturnDTO> GetAllFacilities()
         {
-            var facilities = _repository.GetAll();
+            var facilities = _unitOfWork.GetRepo<Facility>().GetAll();
             return facilities.Map<FacilityToReturnDTO>();
         }
 
         public FacilityToReturnDTO GetFacilityById(int id)
         {
-            var facility = _repository.GetByIDWithTracking(id);
+            var facility = _unitOfWork.GetRepo<Facility>().GetByIDWithTracking(id);
             return facility.MapOne<FacilityToReturnDTO>();
         }
 
         public void Update(int id, FacilityToUpdateDTO facilityDTO)
         {
-            var facility = _repository.GetByIDWithTracking(id) ?? throw new KeyNotFoundException("Facility not found");
+            var facility = _unitOfWork.GetRepo<Facility>().GetByIDWithTracking(id) ?? throw new KeyNotFoundException("Facility not found");
             facilityDTO.MapOne(facility);
-            _repository.SaveChanges();
+            _unitOfWork.GetRepo<Facility>().SaveChanges();
         }
 
         public void Delete(int id)
         {
-            var facility = _repository.GetByIDWithTracking(id);
-            _repository.Delete(facility);
-            _repository.SaveChanges();
+            var facility = _unitOfWork.GetRepo<Facility>().GetByIDWithTracking(id);
+            _unitOfWork.GetRepo<Facility>().Delete(facility);
+            _unitOfWork.GetRepo<Facility>().SaveChanges();
         }
     }
     
