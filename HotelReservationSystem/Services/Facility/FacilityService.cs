@@ -8,44 +8,44 @@ namespace HotelReservationSystem.Services.Rooms
 {
     public class FacilityService : IFacilityService
     {
-        private readonly IRepository<Facility> repository;
+        private readonly IRepository<Facility> _repository;
 
         public FacilityService(IRepository<Facility> repository)
         {
-            this.repository = repository;
+            _repository = repository;
         }
         
         public void Add(FacilityToCreateDTO facilityDTO)
         {
             var facility = facilityDTO.MapOne<Facility>();
-            repository.Add(facility);
-            repository.SaveChanges();
+            _repository.Add(facility);
+            _repository.SaveChanges();
         }
 
         public IEnumerable<FacilityToReturnDTO> GetAllFacilities()
         {
-            var facilities = repository.GetAll();
+            var facilities = _repository.GetAll();
             return facilities.Map<FacilityToReturnDTO>();
         }
 
         public FacilityToReturnDTO GetFacilityById(int id)
         {
-            var facility = repository.GetByIDWithTracking(id);
+            var facility = _repository.GetByIDWithTracking(id);
             return facility.MapOne<FacilityToReturnDTO>();
         }
 
         public void Update(int id, FacilityToUpdateDTO facilityDTO)
         {
-            var facility = repository.GetByIDWithTracking(id) ?? throw new KeyNotFoundException("Facility not found");
+            var facility = _repository.GetByIDWithTracking(id) ?? throw new KeyNotFoundException("Facility not found");
             facilityDTO.MapOne(facility);
-            repository.SaveChanges();
+            _repository.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            var facility = repository.GetByIDWithTracking(id);
-            repository.Delete(facility);
-            repository.SaveChanges();
+            var facility = _repository.GetByIDWithTracking(id);
+            _repository.Delete(facility);
+            _repository.SaveChanges();
         }
     }
     

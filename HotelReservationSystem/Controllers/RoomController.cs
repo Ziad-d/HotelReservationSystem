@@ -14,30 +14,31 @@ namespace HotelReservationSystem.Controllers
     [ApiController]
     public class RoomController : ControllerBase
     {
-        private readonly IRoomService roomService;
+        private readonly IRoomService _roomService;
 
         public RoomController(IRoomService roomService)
         {
-            this.roomService = roomService;
+            _roomService = roomService;
         }
+
         [HttpGet]
         public IEnumerable<RoomToReturnViewModel> GetAllRooms()
         {
-            var rooms = roomService.GetRooms();
+            var rooms = _roomService.GetRooms();
             return rooms.Select(x => x.MapOne<RoomToReturnViewModel>());
         }
 
         [HttpGet("{id}")]
         public RoomToReturnViewModel GetRoomById(int id)
         {
-            var room = roomService.GetRoomById(id);
+            var room = _roomService.GetRoomById(id);
             return room.MapOne<RoomToReturnViewModel>();
         }
 
         [HttpGet]
         public IEnumerable<RoomToReturnViewModel> GetAvailableRooms()
         {
-            var rooms = roomService.GetAvailableRooms();
+            var rooms = _roomService.GetAvailableRooms();
             return rooms.Select(x => x.MapOne<RoomToReturnViewModel>());
         }
 
@@ -45,7 +46,7 @@ namespace HotelReservationSystem.Controllers
         public bool CreateRoom(RoomToCreateViewModel viewModel)
         {
             var room = viewModel.MapOne<RoomToCreateDTO>();
-            roomService.Add(room);
+            _roomService.Add(room);
             return true;
         }
 
@@ -53,7 +54,7 @@ namespace HotelReservationSystem.Controllers
         public bool Update(int id, RoomToUpdateViewModel viewModel)
         {
             var roomDTO = viewModel.MapOne<RoomToUpdateDTO>();
-            roomService.Update(id, roomDTO);
+            _roomService.Update(id, roomDTO);
 
             return true;
         }

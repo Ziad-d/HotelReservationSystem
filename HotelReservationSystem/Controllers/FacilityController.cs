@@ -13,17 +13,17 @@ namespace HotelReservationSystem.Controllers
     [ApiController]
     public class FacilityController : ControllerBase
     {
-        private readonly IFacilityService facilityService;
+        private readonly IFacilityService _facilityService;
 
         public FacilityController(IFacilityService facilityService)
         {
-            this.facilityService = facilityService;
+            _facilityService = facilityService;
         }
 
         [HttpGet]
         public IEnumerable<FacilityToReturnViewModel> GetAllFacilities()
         {
-            var facilities = facilityService.GetAllFacilities();
+            var facilities = _facilityService.GetAllFacilities();
             return facilities.Select(x => x.MapOne<FacilityToReturnViewModel>());
             
         }
@@ -31,7 +31,7 @@ namespace HotelReservationSystem.Controllers
         [HttpGet("{id}")]
         public FacilityToReturnViewModel GetFacilityById(int id)
         {
-            var facility = facilityService.GetFacilityById(id);
+            var facility = _facilityService.GetFacilityById(id);
             return facility.MapOne<FacilityToReturnViewModel>();
         }
 
@@ -40,7 +40,7 @@ namespace HotelReservationSystem.Controllers
         public bool CreateFacility(FacilityToCreateViewModel viewModel)
         {
             var facility = viewModel.MapOne<FacilityToCreateDTO>();
-            facilityService.Add(facility);
+            _facilityService.Add(facility);
             return true;
         }
 
@@ -48,14 +48,14 @@ namespace HotelReservationSystem.Controllers
         public bool UpdateFacility(int id, FacilityToUpdateViewModel viewModel)
         {
             var facilityDTO = viewModel.MapOne<FacilityToUpdateDTO>();
-            facilityService.Update(id, facilityDTO);
+            _facilityService.Update(id, facilityDTO);
             return true;
         }
 
         [HttpDelete("{id}")]
         public bool Delete(int id)
         {
-            facilityService.Delete(id);
+            _facilityService.Delete(id);
             return true;
         }
     }

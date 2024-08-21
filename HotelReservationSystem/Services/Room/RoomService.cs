@@ -9,23 +9,23 @@ namespace HotelReservationSystem.Services.Rooms
 {
     public class RoomService : IRoomService
     {
-        private readonly IRepository<Room> repository;
+        private readonly IRepository<Room> _repository;
 
         public RoomService(IRepository<Room> repository)
         {
-            this.repository = repository;
+            _repository = repository;
         }
 
         public void Add(RoomToCreateDTO roomDTO)
         {
             var room = roomDTO.MapOne<Room>();
-            repository.Add(room);
-            repository.SaveChanges();
+            _repository.Add(room);
+            _repository.SaveChanges();
         }
 
         public void Update(int id, RoomToUpdateDTO roomDTO)
         {
-            var room = repository.GetByIDWithTracking(id) ?? throw new KeyNotFoundException("Room not found");
+            var room = _repository.GetByIDWithTracking(id) ?? throw new KeyNotFoundException("Room not found");
 
             //room.Price = roomDTO.Price;
             //room.PictureUrl = roomDTO.PictureUrl;
@@ -34,35 +34,35 @@ namespace HotelReservationSystem.Services.Rooms
             //room.RoomType = roomDTO.RoomType;
             //room.Facilities = roomDTO.Facilities;
 
-            //repository.Update(room);
+            //_repository.Update(room);
             roomDTO.MapOne(room);
-            repository.SaveChanges();
+            _repository.SaveChanges();
         }
 
         public IEnumerable<RoomToReturnDTO> GetAvailableRooms()
         {
-            var availableRooms = repository.Get(r => r.IsAvailable == true);
+            var availableRooms = _repository.Get(r => r.IsAvailable == true);
 
             return availableRooms.Map<RoomToReturnDTO>();
         }
 
         public RoomToReturnDTO GetRoomById(int id)
         {
-            var room = repository.GetByIDWithTracking(id);
+            var room = _repository.GetByIDWithTracking(id);
             return room.MapOne<RoomToReturnDTO>();
         }
 
         public IEnumerable<RoomToReturnDTO> GetRooms()
         {
-            var rooms = repository.GetAll();
+            var rooms = _repository.GetAll();
             return rooms.Map<RoomToReturnDTO>();
         }
 
         public void Delete(int id)
         {
-            var room = repository.GetByIDWithTracking(id);
-            repository.Delete(room);
-            repository.SaveChanges();
+            var room = _repository.GetByIDWithTracking(id);
+            _repository.Delete(room);
+            _repository.SaveChanges();
         }
     }
 }
