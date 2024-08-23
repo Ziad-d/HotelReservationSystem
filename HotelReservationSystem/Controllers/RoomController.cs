@@ -2,7 +2,7 @@
 using HotelReservationSystem.DTOs.Room;
 using HotelReservationSystem.Enums;
 using HotelReservationSystem.Models;
-using HotelReservationSystem.Models.Room;
+using HotelReservationSystem.Models.Rooms;
 using HotelReservationSystem.Services.Rooms;
 using HotelReservationSystem.ViewModels.Room;
 using Microsoft.AspNetCore.Http;

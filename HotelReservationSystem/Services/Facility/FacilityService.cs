@@ -1,7 +1,7 @@
 ﻿
 using ExaminationSystem.Helpers;
 using HotelReservationSystem.DTOs.Room;
-using HotelReservationSystem.Models.Room;
+using HotelReservationSystem.Models.Rooms;
 using HotelReservationSystem.Repositories;
 using HotelReservationSystem.Repositories.UnitOfWork;
 

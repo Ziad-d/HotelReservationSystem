@@ -2,7 +2,7 @@
 using HotelReservationSystem.DTOs.Room;
 using HotelReservationSystem.Enums;
 using HotelReservationSystem.Models;
-using HotelReservationSystem.Models.Room;
+using HotelReservationSystem.Models.Rooms;
 using HotelReservationSystem.Repositories;
 using HotelReservationSystem.Repositories.UnitOfWork;
 
@@ -42,7 +42,7 @@ namespace HotelReservationSystem.Services.Rooms
 
         public IEnumerable<RoomToReturnDTO> GetAvailableRooms()
         {
-            var availableRooms = _unitOfWork.GetRepo<Room>().Get(r => r.IsAvailable == true);
+            var availableRooms = _unitOfWork.GetRepo<Room>().Get(r => r.IsAvailable == true );
 
             return availableRooms.Map<RoomToReturnDTO>();
         }

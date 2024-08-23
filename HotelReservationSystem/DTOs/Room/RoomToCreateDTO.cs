@@ -1,5 +1,5 @@
 ﻿using HotelReservationSystem.Enums;
-using HotelReservationSystem.Models.Room;
+using HotelReservationSystem.Models.Rooms;
 
 namespace HotelReservationSystem.DTOs.Room
 {

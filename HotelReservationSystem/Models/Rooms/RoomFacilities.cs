@@ -1,4 +1,4 @@
-﻿namespace HotelReservationSystem.Models.Room
+﻿namespace HotelReservationSystem.Models.Rooms
 {
     public class RoomFacilities : BaseModel
     {

@@ -1,6 +1,7 @@
 ﻿using HotelReservationSystem.Enums;
+using HotelReservationSystem.Models.Reservations;
 
-namespace HotelReservationSystem.Models.Room
+namespace HotelReservationSystem.Models.Rooms
 {
     public class Room : BaseModel
     {
@@ -10,5 +11,8 @@ namespace HotelReservationSystem.Models.Room
         public string Description { get; set; } = string.Empty;
         public RoomType RoomType { get; set; }
         public HashSet<RoomFacilities> RoomFacilities { get; set; }
+
+        public Reservation Reservation { get; set; }
+        public int ReservationId { get; set; }
     }
 }
