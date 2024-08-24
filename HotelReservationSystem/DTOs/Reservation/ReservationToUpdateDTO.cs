@@ -9,6 +9,7 @@ namespace HotelReservationSystem.DTOs.Room
         public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }
         public int NumberOfReservedDays { get; set; }
+
         //public List<Room> Rooms { get; set; }
     }
 }

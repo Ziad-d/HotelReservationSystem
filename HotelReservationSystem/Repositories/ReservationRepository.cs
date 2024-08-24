@@ -1,17 +1,18 @@
 ﻿using HotelReservationSystem.Data;
 using HotelReservationSystem.Models;
+using HotelReservationSystem.Models.Reservations;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace HotelReservationSystem.Repositories
 {
-    public class Repository<T> : IRepository<T> where T : BaseModel
+    public class ReservationRepository<T> : IReservationRepository<T> where T : Reservation
     {
         private readonly Context _context;
 
-        public Repository(Context context)
+        public ReservationRepository(Context context)
         {
-            _context = context; 
+            _context = context;
         }
 
         public IQueryable<T> GetAll()
@@ -48,10 +49,6 @@ namespace HotelReservationSystem.Repositories
             _context.Set<T>().Add(entity);
         }
 
-        public void Update(T entity)
-        {
-            _context.Set<T>().Update(entity);
-        }
 
         public void Delete(T entity)
         {
@@ -69,10 +66,14 @@ namespace HotelReservationSystem.Repositories
         {
             _context.Set<T>().Where(x => x.ID == id).ExecuteDelete();
         }
+        public void Update(T entity)
+        {
+            _context.Set<T>().Update(entity);
+        }
         public void CancelReservation(T entity)
         {
-            //entity.IsCanceled= true;
-            //Update(entity);
+            entity.IsCanceled = true;
+            Update(entity);
         }
 
         public void SaveChanges()

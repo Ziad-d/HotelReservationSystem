@@ -18,11 +18,31 @@ namespace HotelReservationSystem.Services.Rooms
         {
             _unitOfWork = unitOfWork;
         }
-        public void  CancelReservation(int id, ReservationToUpdateDTO reservationToUpdateDTO)
+
+        //public void Update(int id, RoomToUpdateDTO roomDTO)
+        //{
+        //    //var room = _unitOfWork.GetRepo<Room>().GetByIDWithTracking(id) ?? throw new KeyNotFoundException("Room not found");
+
+        //    //room.Price = roomDTO.Price;
+        //    //room.PictureUrl = roomDTO.PictureUrl;
+        //    //room.IsAvailable = roomDTO.IsAvailable;
+        //    //room.Description = roomDTO.Description;
+        //    //room.RoomType = roomDTO.RoomType;
+        //    //room.Facilities = roomDTO.Facilities;
+
+        //    //_repository.Update(room);
+        //    //roomDTO.MapOne(room);
+        //    //_unitOfWork.GetRepo<Room>().SaveChanges();        //}
+
+        //}
+        public void  CancelReservation(int id , ReservationToUpdateDTO reservationToUpdateDTO)
         {
-            var reservations = reservationToUpdateDTO.MapOne<Reservation>();
-            _unitOfWork.GetRepo<Reservation>().CancelReservation(reservations);
-            _unitOfWork.GetRepo<Reservation>().SaveChanges();
+            var reservation = _unitOfWork.GetRepo<Reservation>().GetByIDWithTracking(id) ?? throw new KeyNotFoundException("Reservation not found");
+
+
+            reservationToUpdateDTO.MapOne(reservation);
+
+            _unitOfWork.GetRepo<Reservation>().SaveChanges();        //}
 
         }
         public void Add(ReservationToCreateDTO reservationDTO)
@@ -36,9 +56,6 @@ namespace HotelReservationSystem.Services.Rooms
             var reservations = _unitOfWork.GetRepo<Reservation>().GetAll();
             return reservations.Map<ReservationToReturnDTO>();
         }
-
-        
-
 
 
         //public Reservation GetReservationById(int id)
@@ -75,9 +92,5 @@ namespace HotelReservationSystem.Services.Rooms
         //    throw new NotImplementedException();
         //}
 
-        //public void Update(int id, RoomToUpdateDTO roomDTO)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

@@ -45,9 +45,6 @@ namespace HotelReservationSystem.Data.Migrations
                     b.Property<int>("NumberOfReservedDays")
                         .HasColumnType("int");
 
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
 
                     b.ToTable("Reservations");
@@ -64,9 +61,6 @@ namespace HotelReservationSystem.Data.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsCanceled")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -96,9 +90,6 @@ namespace HotelReservationSystem.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsAvailable")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsCanceled")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
@@ -134,9 +125,6 @@ namespace HotelReservationSystem.Data.Migrations
 
                     b.Property<int>("FacilityId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsCanceled")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");

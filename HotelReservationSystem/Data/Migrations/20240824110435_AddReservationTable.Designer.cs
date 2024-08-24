@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelReservationSystem.Data.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240822204905_AddReservationTable")]
+    [Migration("20240824110435_AddReservationTable")]
     partial class AddReservationTable
     {
         /// <inheritdoc />
@@ -48,9 +48,6 @@ namespace HotelReservationSystem.Data.Migrations
                     b.Property<int>("NumberOfReservedDays")
                         .HasColumnType("int");
 
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
 
                     b.ToTable("Reservations");
@@ -67,9 +64,6 @@ namespace HotelReservationSystem.Data.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsCanceled")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -99,9 +93,6 @@ namespace HotelReservationSystem.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsAvailable")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsCanceled")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
@@ -137,9 +128,6 @@ namespace HotelReservationSystem.Data.Migrations
 
                     b.Property<int>("FacilityId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsCanceled")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");

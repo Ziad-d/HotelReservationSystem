@@ -25,6 +25,7 @@ namespace HotelReservationSystem.Controllers
         public IEnumerable<ReservationToReturnViewModel> GetAllReservations()
         {
             var reservations = _reservationService.GetReservations();
+           
             return reservations.Select(x => x.MapOne<ReservationToReturnViewModel>());
         }
 
@@ -51,7 +52,7 @@ namespace HotelReservationSystem.Controllers
         }
 
         [HttpPut]
-        public bool Cancel(int id , ReservationToUpdateViewModel viewModel)
+        public bool Cancel( int id ,ReservationToUpdateViewModel viewModel)
         {
             var reservationDTO = viewModel.MapOne<ReservationToUpdateDTO>();
             _reservationService.CancelReservation(id ,reservationDTO);
