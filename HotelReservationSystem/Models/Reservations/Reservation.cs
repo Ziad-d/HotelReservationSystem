@@ -6,7 +6,13 @@ namespace HotelReservationSystem.Models.Reservations
     {
         public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }
-        public int NumberOfReservedDays { get; set; }
+        public int NumberOfReservedDays
+        {
+            get
+            {
+                return (CheckOutDate - CheckInDate).Days;
+            }
+        }
         public bool IsCanceled { get; set; } = false;
         public List<Room> Rooms { get; set; }
 

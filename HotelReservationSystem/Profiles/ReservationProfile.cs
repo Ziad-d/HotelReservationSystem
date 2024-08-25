@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
-using HotelReservationSystem.DTOs.Room;
+using HotelReservationSystem.DTOs.ReservationDTOs;
 using HotelReservationSystem.Models.Reservations;
-using HotelReservationSystem.Models.Rooms;
-using HotelReservationSystem.ViewModels.Room;
+using HotelReservationSystem.ViewModels.ReservationViewModels;
 
 namespace HotelReservationSystem.Profiles
 {
@@ -10,7 +9,11 @@ namespace HotelReservationSystem.Profiles
     {
         public ReservationProfile() 
         {
-            CreateMap<ReservationToCreateDTO, Reservation>().ReverseMap();
+            CreateMap<ReservationToCreateDTO, Reservation>();
+                //.ForMember(dest => dest.Rooms, opt => opt.MapFrom(src => src.RoomIDs))
+                //.ForMember(dest => dest.NumberOfReservedDays, opt => 
+                //    opt.MapFrom(src => (src.CheckOutDate - src.CheckInDate).Days))
+                //.ForMember(dest => dest.IsCanceled, opt => opt.Ignore());
             CreateMap<ReservationToCreateViewModel, ReservationToCreateDTO>();
 
             CreateMap<ReservationToUpdateDTO, Reservation>().ReverseMap();
