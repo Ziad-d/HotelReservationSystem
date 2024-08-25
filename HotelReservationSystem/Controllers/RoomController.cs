@@ -1,11 +1,62 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ExaminationSystem.Helpers;
+using HotelReservationSystem.DTOs.Room;
+using HotelReservationSystem.Enums;
+using HotelReservationSystem.Models;
+using HotelReservationSystem.Models.Room;
+using HotelReservationSystem.Services.Rooms;
+using HotelReservationSystem.ViewModels.Room;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelReservationSystem.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]/[action]")]
     [ApiController]
     public class RoomController : ControllerBase
     {
+        private readonly IRoomService _roomService;
+
+        public RoomController(IRoomService roomService)
+        {
+            _roomService = roomService;
+        }
+
+        [HttpGet]
+        public IEnumerable<RoomToReturnViewModel> GetAllRooms()
+        {
+            var rooms = _roomService.GetRooms();
+            return rooms.Select(x => x.MapOne<RoomToReturnViewModel>());
+        }
+
+        [HttpGet("{id}")]
+        public RoomToReturnViewModel GetRoomById(int id)
+        {
+            var room = _roomService.GetRoomById(id);
+            return room.MapOne<RoomToReturnViewModel>();
+        }
+
+        [HttpGet]
+        public IEnumerable<RoomToReturnViewModel> GetAvailableRooms()
+        {
+            var rooms = _roomService.GetAvailableRooms();
+            return rooms.Select(x => x.MapOne<RoomToReturnViewModel>());
+        }
+
+        [HttpPost]
+        public bool CreateRoom(RoomToCreateViewModel viewModel)
+        {
+            var room = viewModel.MapOne<RoomToCreateDTO>();
+            _roomService.Add(room);
+            return true;
+        }
+
+        [HttpPut]
+        public bool Update(int id, RoomToUpdateViewModel viewModel)
+        {
+            var roomDTO = viewModel.MapOne<RoomToUpdateDTO>();
+            _roomService.Update(id, roomDTO);
+
+            return true;
+        }
     }
 }

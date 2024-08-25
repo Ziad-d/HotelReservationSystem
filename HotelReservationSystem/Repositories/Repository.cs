@@ -7,27 +7,27 @@ namespace HotelReservationSystem.Repositories
 {
     public class Repository<T> : IRepository<T> where T : BaseModel
     {
-        private readonly Context context;
+        private readonly Context _context;
 
         public Repository(Context context)
         {
-            this.context = context;
+            _context = context;
         }
 
         public IQueryable<T> GetAll()
         {
-            return context.Set<T>().Where(x => !x.IsDeleted);
+            return _context.Set<T>().Where(x => !x.IsDeleted);
         }
 
         public IQueryable<T> GetByID(int id)
         {
-            return context.Set<T>()
+            return _context.Set<T>()
                 .Where(x => !x.IsDeleted && x.ID == id);
         }
 
         public T GetByIDWithTracking(int id)
         {
-            return context.Set<T>()
+            return _context.Set<T>()
                 .Where(x => !x.IsDeleted && x.ID == id)
                 .AsTracking()
                 .FirstOrDefault();
@@ -45,12 +45,12 @@ namespace HotelReservationSystem.Repositories
 
         public void Add(T entity)
         {
-            context.Set<T>().Add(entity);
+            _context.Set<T>().Add(entity);
         }
 
         public void Update(T entity)
         {
-            context.Set<T>().Update(entity);
+            _context.Set<T>().Update(entity);
         }
 
         public void Delete(T entity)
@@ -61,18 +61,18 @@ namespace HotelReservationSystem.Repositories
 
         public void Delete(int id)
         {
-            T entity = context.Find<T>(id);
+            T entity = _context.Find<T>(id);
             Delete(entity);
         }
 
         public void HardDelete(int id)
         {
-            context.Set<T>().Where(x => x.ID == id).ExecuteDelete();
+            _context.Set<T>().Where(x => x.ID == id).ExecuteDelete();
         }
 
         public void SaveChanges()
         {
-            context.SaveChanges();
+            _context.SaveChanges();
         }
     }
 }
