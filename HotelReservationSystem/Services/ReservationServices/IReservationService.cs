@@ -7,5 +7,6 @@ namespace HotelReservationSystem.Services.ReservationServices
         void Add(ReservationToCreateDTO reservationToCreateDTO);
         IEnumerable<ReservationToReturnDTO> GetAll();
         ReservationToReturnDTO GetById(int id);
+        void CancelReservation(int id);
     }
 }

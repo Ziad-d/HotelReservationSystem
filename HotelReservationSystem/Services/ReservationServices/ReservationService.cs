@@ -18,7 +18,7 @@ namespace HotelReservationSystem.Services.ReservationServices
         
         public void Add(ReservationToCreateDTO reservationDTO)
         {
-            var reservation = MapperHelper.MapOne<Reservation>(reservationDTO);
+            var reservation = reservationDTO.MapOne<Reservation>();
             _unitOfWork.GetRepo<Reservation>().Add(reservation);
             _unitOfWork.GetRepo<Reservation>().SaveChanges();
         }
@@ -33,6 +33,13 @@ namespace HotelReservationSystem.Services.ReservationServices
         {
             var reservation = _unitOfWork.GetRepo<Reservation>().GetByIDWithTracking(id);
             return reservation.MapOne<ReservationToReturnDTO>();
+        }
+
+        public void CancelReservation(int id)
+        {
+            var reservation = _unitOfWork.GetRepo<Reservation>().GetByIDWithTracking(id);
+            reservation.IsCanceled = true;
+            _unitOfWork.GetRepo<Reservation>().SaveChanges();
         }
     }
 }

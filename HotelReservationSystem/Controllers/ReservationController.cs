@@ -40,5 +40,12 @@ namespace HotelReservationSystem.Controllers
             var reservation = _reservationService.GetById(id);
             return reservation.MapOne<ReservationToReturnViewModel>();
         }
+
+        [HttpPatch]
+        public bool CancelReservation(int id)
+        {
+            _reservationService.CancelReservation(id);
+            return true;
+        }
     }
 }
