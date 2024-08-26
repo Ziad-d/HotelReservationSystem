@@ -69,17 +69,10 @@ namespace HotelReservationSystem.Repositories
         {
             _context.Set<T>().Where(x => x.ID == id).ExecuteDelete();
         }
-        public void CancelReservation(T entity)
-        {
-            //entity.IsCanceled= true;
-            //Update(entity);
-        }
 
         public void SaveChanges()
         {
             _context.SaveChanges();
         }
-
-        
     }
 }

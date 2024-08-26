@@ -1,7 +1,4 @@
-﻿using HotelReservationSystem.Enums;
-using HotelReservationSystem.Models.Rooms;
-
-namespace HotelReservationSystem.ViewModels.ReservationViewModels
+﻿namespace HotelReservationSystem.ViewModels.ReservationViewModels
 {
     public class ReservationToCreateViewModel
     {

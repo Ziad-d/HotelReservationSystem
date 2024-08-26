@@ -46,7 +46,7 @@ namespace HotelReservationSystem.Controllers
             return true;
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public bool Update(int id, RoomToUpdateViewModel viewModel)
         {
             var roomDTO = viewModel.MapOne<RoomToUpdateDTO>();

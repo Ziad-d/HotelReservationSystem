@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using HotelReservationSystem.DTOs.FacilityDTOs;
-using HotelReservationSystem.Models.Rooms;
+using HotelReservationSystem.Models;
 using HotelReservationSystem.ViewModels.FacilityViewModels;
 
 namespace HotelReservationSystem.Profiles

@@ -1,8 +1,6 @@
 ﻿using ExaminationSystem.Helpers;
 using HotelReservationSystem.DTOs.ReservationDTOs;
-using HotelReservationSystem.DTOs.RoomDTOs;
-using HotelReservationSystem.Models.Reservations;
-using HotelReservationSystem.Models.Rooms;
+using HotelReservationSystem.Models;
 using HotelReservationSystem.Repositories.UnitOfWork;
 
 namespace HotelReservationSystem.Services.ReservationServices

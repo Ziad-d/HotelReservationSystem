@@ -1,6 +1,6 @@
 ﻿using ExaminationSystem.Helpers;
 using HotelReservationSystem.DTOs.RoomDTOs;
-using HotelReservationSystem.Models.Rooms;
+using HotelReservationSystem.Models;
 using HotelReservationSystem.Repositories.UnitOfWork;
 
 namespace HotelReservationSystem.Services.RoomServices
@@ -16,6 +16,15 @@ namespace HotelReservationSystem.Services.RoomServices
 
         public void Add(RoomToCreateDTO roomDTO)
         {
+            var existingRoom = _unitOfWork.GetRepo<Room>()
+                                          .Get(r => r.RoomNumber == roomDTO.RoomNumber)
+                                          .Any();
+
+            if (existingRoom)
+            {
+                throw new InvalidOperationException($"Room with number {roomDTO.RoomNumber} already exists.");
+            }
+
             var room = roomDTO.MapOne<Room>();
             _unitOfWork.GetRepo<Room>().Add(room);
             _unitOfWork.GetRepo<Room>().SaveChanges();
@@ -39,14 +48,14 @@ namespace HotelReservationSystem.Services.RoomServices
 
         public IEnumerable<RoomToReturnDTO> GetAvailableRooms()
         {
-            var availableRooms = _unitOfWork.GetRepo<Room>().Get(r => r.IsAvailable == true );
+            var availableRooms = _unitOfWork.GetRepo<Room>().Get(r => r.IsAvailable == true);
 
             return availableRooms.Map<RoomToReturnDTO>();
         }
 
         public RoomToReturnDTO GetRoomById(int id)
         {
-            var room = _unitOfWork.GetRepo<Room>().GetByIDWithTracking(id);
+            var room = _unitOfWork.GetRepo<Room>().GetByID(id).FirstOrDefault();
             return room.MapOne<RoomToReturnDTO>();
         }
 

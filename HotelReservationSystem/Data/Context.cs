@@ -1,5 +1,4 @@
-﻿using HotelReservationSystem.Models.Reservations;
-using HotelReservationSystem.Models.Rooms;
+﻿using HotelReservationSystem.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Reflection;

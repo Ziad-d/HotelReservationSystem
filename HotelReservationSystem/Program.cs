@@ -20,6 +20,8 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
     builder.RegisterModule(new AutofacModule()));
 
 builder.Services.AddAutoMapper(typeof(RoomProfile));
+builder.Services.AddAutoMapper(typeof(FacilityProfile));
+builder.Services.AddAutoMapper(typeof(ReservationProfile));
 
 var app = builder.Build();
 

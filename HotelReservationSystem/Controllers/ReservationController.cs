@@ -1,6 +1,5 @@
 ﻿using ExaminationSystem.Helpers;
 using HotelReservationSystem.DTOs.ReservationDTOs;
-using HotelReservationSystem.Models.Reservations;
 using HotelReservationSystem.Services.ReservationServices;
 using HotelReservationSystem.ViewModels.ReservationViewModels;
 using HotelReservationSystem.ViewModels.RoomViewModels;

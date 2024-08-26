@@ -1,7 +1,4 @@
-﻿using HotelReservationSystem.Enums;
-using HotelReservationSystem.Models.Rooms;
-
-namespace HotelReservationSystem.DTOs.ReservationDTOs
+﻿namespace HotelReservationSystem.DTOs.ReservationDTOs
 {
     public class ReservationToUpdateDTO
     {
