@@ -3,7 +3,7 @@ using HotelReservationSystem.Models;
 
 namespace HotelReservationSystem.DTOs.RoomDTOs
 {
-    public class RoomToUpdateDTO
+    public record RoomToUpdateDTO
     {
         public int RoomNumber { get; set; }
         public decimal Price { get; set; }

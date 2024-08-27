@@ -3,7 +3,7 @@ using HotelReservationSystem.Models;
 
 namespace HotelReservationSystem.ViewModels.RoomViewModels
 {
-    public class RoomToReturnViewModel
+    public record RoomToReturnViewModel
     {
         public int RoomNumber { get; set; }
         public decimal Price { get; set; }

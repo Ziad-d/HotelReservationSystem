@@ -29,8 +29,11 @@ namespace HotelReservationSystem.Services.FacilityServices
 
         public FacilityToReturnDTO GetFacilityById(int id)
         {
-            var facility = _unitOfWork.GetRepo<Facility>().GetByIDWithTracking(id);
-            return facility.MapOne<FacilityToReturnDTO>();
+            var facility = _unitOfWork.GetRepo<Facility>()
+                .GetByID(id)
+                .Map<FacilityToReturnDTO>()
+                .FirstOrDefault();
+            return facility;
         }
 
         public void Update(int id, FacilityToUpdateDTO facilityDTO)

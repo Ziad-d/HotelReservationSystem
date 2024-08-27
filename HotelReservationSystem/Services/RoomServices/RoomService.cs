@@ -55,8 +55,11 @@ namespace HotelReservationSystem.Services.RoomServices
 
         public RoomToReturnDTO GetRoomById(int id)
         {
-            var room = _unitOfWork.GetRepo<Room>().GetByID(id).FirstOrDefault();
-            return room.MapOne<RoomToReturnDTO>();
+            var room = _unitOfWork.GetRepo<Room>()
+                .GetByID(id)
+                .Map<RoomToReturnDTO>()
+                .FirstOrDefault();
+            return room;
         }
 
         public IEnumerable<RoomToReturnDTO> GetRooms()

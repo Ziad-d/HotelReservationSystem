@@ -29,8 +29,11 @@ namespace HotelReservationSystem.Services.ReservationServices
 
         public ReservationToReturnDTO GetById(int id)
         {
-            var reservation = _unitOfWork.GetRepo<Reservation>().GetByIDWithTracking(id);
-            return reservation.MapOne<ReservationToReturnDTO>();
+            var reservation = _unitOfWork.GetRepo<Reservation>()
+                .GetByID(id)
+                .Map<ReservationToReturnDTO>()
+                .FirstOrDefault();
+            return reservation;
         }
 
         public void CancelReservation(int id)
