@@ -4,6 +4,7 @@ using ExaminationSystem;
 using HotelReservationSystem.Profiles;
 using AutoMapper;
 using ExaminationSystem.Helpers;
+using ExaminationSystem.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,9 @@ builder.Services.AddAutoMapper(typeof(ReservationProfile));
 var app = builder.Build();
 
 MapperHelper.Mapper = app.Services.GetService<IMapper>();
+
+app.UseMiddleware<GlobalErrorHandlerMiddleware>();
+app.UseMiddleware<TransactionMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
