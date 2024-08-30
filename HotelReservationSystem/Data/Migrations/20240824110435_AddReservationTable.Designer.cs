@@ -4,6 +4,7 @@ using HotelReservationSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelReservationSystem.Data.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20240824110435_AddReservationTable")]
+    partial class AddReservationTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,12 +45,12 @@ namespace HotelReservationSystem.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("NumberOfReservedDays")
+                        .HasColumnType("int");
+
                     b.HasKey("ID");
 
-                    b.ToTable("Reservations", t =>
-                        {
-                            t.HasCheckConstraint("CK_Reservation_CheckDates", "[CheckOutDate] > [CheckInDate]");
-                        });
+                    b.ToTable("Reservations");
                 });
 
             modelBuilder.Entity("HotelReservationSystem.Models.Rooms.Facility", b =>
@@ -146,7 +149,7 @@ namespace HotelReservationSystem.Data.Migrations
                     b.HasOne("HotelReservationSystem.Models.Reservations.Reservation", "Reservation")
                         .WithMany("Rooms")
                         .HasForeignKey("ReservationId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Reservation");
@@ -157,13 +160,13 @@ namespace HotelReservationSystem.Data.Migrations
                     b.HasOne("HotelReservationSystem.Models.Rooms.Facility", "Facility")
                         .WithMany("RoomFacilities")
                         .HasForeignKey("FacilityId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("HotelReservationSystem.Models.Rooms.Room", "Room")
                         .WithMany("RoomFacilities")
                         .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Facility");

@@ -1,11 +1,7 @@
 ﻿using ExaminationSystem.Helpers;
-using HotelReservationSystem.DTOs.Room;
-using HotelReservationSystem.Enums;
-using HotelReservationSystem.Models;
-using HotelReservationSystem.Models.Room;
-using HotelReservationSystem.Services.Rooms;
-using HotelReservationSystem.ViewModels.Room;
-using Microsoft.AspNetCore.Http;
+using HotelReservationSystem.DTOs.RoomDTOs;
+using HotelReservationSystem.Services.RoomServices;
+using HotelReservationSystem.ViewModels.RoomViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelReservationSystem.Controllers

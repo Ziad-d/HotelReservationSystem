@@ -1,4 +1,4 @@
-﻿using HotelReservationSystem.Models.Room;
+﻿using HotelReservationSystem.Models.Rooms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
