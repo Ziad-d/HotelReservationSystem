@@ -10,7 +10,9 @@ namespace HotelReservationSystem.ViewModels.ReservationViewModels
         public DateTime CheckOutDate { get; set; }
         public int NumberOfReservedDays { get; set; }
         public bool IsCanceled { get; set; } = false;
-
+        public PaymentStatus PaymentStatus { get; set; }
+        public string? PaymentIntentId { get; set; }
+        public decimal TotalAmount { get; set; }
         //public List<Room> Rooms { get; set; }
 
     }

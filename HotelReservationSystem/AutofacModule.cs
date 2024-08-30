@@ -2,6 +2,7 @@
 using HotelReservationSystem.Data;
 using HotelReservationSystem.Repositories.UnitOfWork;
 using HotelReservationSystem.Services.FacilityServices;
+using HotelReservationSystem.Services.PaymentService;
 using HotelReservationSystem.Services.ReservationServices;
 using HotelReservationSystem.Services.RoomServices;
 
@@ -17,6 +18,8 @@ namespace ExaminationSystem
             builder.RegisterAssemblyTypes(typeof(IRoomService).Assembly).AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterAssemblyTypes(typeof(IReservationService).Assembly).AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterAssemblyTypes(typeof(IFacilityService).Assembly).AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterAssemblyTypes(typeof(IPaymentService).Assembly).AsImplementedInterfaces().InstancePerLifetimeScope();
+
         }
     }
 }

@@ -15,6 +15,10 @@ namespace HotelReservationSystem.Models.Reservations
         }
         public bool IsCanceled { get; set; } = false;
         public List<Room> Rooms { get; set; }
+        public string? PaymentIntentId { get; set; }
+        public PaymentStatus PaymentStatus { get; set; }
+        public decimal TotalAmount { get; set; }
+        public DateTime? PaymentDate { get; set; }
 
     }
 }
