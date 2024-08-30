@@ -5,9 +5,9 @@ namespace HotelReservationSystem.DTOs.RoomDTOs
 {
     public record RoomToUpdateDTO
     {
-        public int RoomNumber { get; set; }
-        public decimal Price { get; set; }
-        public bool IsAvailable { get; set; }
-        public RoomType RoomType { get; set; }
+        public int? RoomNumber { get; set; }
+        public decimal? Price { get; set; }
+        public bool? IsAvailable { get; set; }
+        public RoomType? RoomType { get; set; }
     }
 }

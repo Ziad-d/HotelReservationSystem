@@ -26,14 +26,6 @@ namespace HotelReservationSystem.Services.RoomServices
         {
             var room = _unitOfWork.GetRepo<Room>().GetByIDWithTracking(id) ?? throw new KeyNotFoundException("Room not found");
 
-            //room.Price = roomDTO.Price;
-            //room.PictureUrl = roomDTO.PictureUrl;
-            //room.IsAvailable = roomDTO.IsAvailable;
-            //room.Description = roomDTO.Description;
-            //room.RoomType = roomDTO.RoomType;
-            //room.Facilities = roomDTO.Facilities;
-
-            //_repository.Update(room);
             roomDTO.MapOne(room);
             _unitOfWork.GetRepo<Room>().SaveChanges();
         }
