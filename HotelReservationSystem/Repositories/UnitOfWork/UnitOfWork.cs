@@ -33,8 +33,8 @@ namespace HotelReservationSystem.Repositories.UnitOfWork
             return _repositories[key] as IRepository<TEntity>;
         }
 
-        public async Task<int> CompleteAsync()
-            => await _context.SaveChangesAsync();
+        //public int CompleteAsync()
+        //    => _context.SaveChanges();
 
         public async ValueTask DisposeAsync()
             => await _context.DisposeAsync();

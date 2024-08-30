@@ -9,7 +9,7 @@ namespace HotelReservationSystem.Models
         public bool IsAvailable { get; set; } = true;
         public RoomType RoomType { get; set; }
 
-        public HashSet<RoomFacilities> RoomFacilities { get; set; }
+        public HashSet<RoomFacility> RoomFacilities { get; set; }
 
         public List<Picture> Pictures { get; set; }
 

@@ -10,7 +10,7 @@ namespace HotelReservationSystem.Profiles
         public RoomProfile() 
         {
             CreateMap<RoomToCreateDTO, Room>().ReverseMap();
-            CreateMap<RoomToCreateViewModel, RoomToCreateDTO>();
+            CreateMap<RoomToCreateViewModel, RoomToCreateDTO>().ReverseMap();
 
             CreateMap<RoomToUpdateDTO, Room>();
             CreateMap<RoomToUpdateViewModel, RoomToUpdateDTO>();

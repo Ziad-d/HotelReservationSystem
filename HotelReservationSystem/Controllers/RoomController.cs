@@ -1,5 +1,6 @@
 ﻿using ExaminationSystem.Helpers;
 using HotelReservationSystem.DTOs.RoomDTOs;
+using HotelReservationSystem.Mediators;
 using HotelReservationSystem.Services.RoomServices;
 using HotelReservationSystem.ViewModels;
 using HotelReservationSystem.ViewModels.RoomViewModels;
@@ -12,10 +13,12 @@ namespace HotelReservationSystem.Controllers
     public class RoomController : ControllerBase
     {
         private readonly IRoomService _roomService;
+        private readonly IRoomMediator _roomMediator;
 
-        public RoomController(IRoomService roomService)
+        public RoomController(IRoomService roomService, IRoomMediator roomMediator)
         {
             _roomService = roomService;
+            _roomMediator = roomMediator;
         }
 
         [HttpGet]
@@ -46,7 +49,15 @@ namespace HotelReservationSystem.Controllers
         public ResponseViewModel<bool> CreateRoom(RoomToCreateViewModel viewModel)
         {
             var room = viewModel.MapOne<RoomToCreateDTO>();
-            _roomService.Add(room);
+            var Addedroom = _roomService.AddAsync(room);
+            return ResponseViewModel<bool>.Sucess(true);
+        }
+
+        [HttpPost]
+        public async Task<ResponseViewModel<bool>> CreateRoomWithFacilities(RoomToCreateViewModel viewModel)
+        {
+            var room = viewModel.MapOne<RoomToCreateDTO>();
+            await _roomMediator.Add(room);
             return ResponseViewModel<bool>.Sucess(true);
         }
 

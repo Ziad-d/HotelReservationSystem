@@ -14,20 +14,12 @@ namespace HotelReservationSystem.Services.RoomServices
             _unitOfWork = unitOfWork;
         }
 
-        public void Add(RoomToCreateDTO roomDTO)
+        public async Task<Room> AddAsync(RoomToCreateDTO roomDTO)
         {
-            var existingRoom = _unitOfWork.GetRepo<Room>()
-                                          .Get(r => r.RoomNumber == roomDTO.RoomNumber)
-                                          .Any();
-
-            if (existingRoom)
-            {
-                throw new InvalidOperationException($"Room with number {roomDTO.RoomNumber} already exists.");
-            }
-
             var room = roomDTO.MapOne<Room>();
-            _unitOfWork.GetRepo<Room>().Add(room);
+            await _unitOfWork.GetRepo<Room>().AddAsync(room);
             _unitOfWork.GetRepo<Room>().SaveChanges();
+            return room;
         }
 
         public void Update(int id, RoomToUpdateDTO roomDTO)

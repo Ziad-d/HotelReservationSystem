@@ -12,6 +12,7 @@ namespace HotelReservationSystem.Repositories
         IQueryable<T> GetByID(int id);
         T GetByIDWithTracking(int id);
         void Add(T entity);
+        Task AddAsync(T entity);
         void Update(T entity);
         void Delete(T entity);
         void Delete(int id);
