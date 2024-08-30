@@ -8,7 +8,7 @@ namespace HotelReservationSystem.DTOs.RoomDTOs
         public int RoomNumber { get; set; }
         public decimal Price { get; set; }
         public RoomType RoomType { get; set; }
-        public HashSet<int> FacilityIDs { get; set; }
+        public HashSet<int> FacilityIDs { get; set; } = new HashSet<int>();
 
     }
 }

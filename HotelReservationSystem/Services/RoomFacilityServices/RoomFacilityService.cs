@@ -27,6 +27,11 @@ namespace HotelReservationSystem.Services.RoomFacilityServices
             }
 
             var room = _unitOfWork.GetRepo<Room>().GetByIDWithTracking(roomID);
+
+            if(room.RoomFacilities == null)
+            {
+                room.RoomFacilities = new HashSet<RoomFacility>();
+            }
             // if room == null
             foreach(var facility in facilitiesToAdd)
             {
