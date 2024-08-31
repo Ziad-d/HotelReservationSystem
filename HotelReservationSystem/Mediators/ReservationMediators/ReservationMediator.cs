@@ -7,10 +7,10 @@ namespace HotelReservationSystem.Mediators.ReservationMediators
 {
     public class ReservationMediator : IReservationMediator
     {
-        private readonly ReservationService _reservationService;
-        private readonly RoomReservationService _roomReservationService;
+        private readonly IReservationService _reservationService;
+        private readonly IRoomReservationService _roomReservationService;
 
-        public ReservationMediator(ReservationService reservationService, RoomReservationService roomReservationService) 
+        public ReservationMediator(IReservationService reservationService, IRoomReservationService roomReservationService) 
         {
             _reservationService = reservationService;
             _roomReservationService = roomReservationService;
