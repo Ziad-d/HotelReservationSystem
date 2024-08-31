@@ -22,11 +22,11 @@ namespace HotelReservationSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<ResponseViewModel<bool>> CreateReservationWithRooms(ReservationToCreateViewModel viewModel)
+        public async Task<ResponseViewModel<bool>> CreateReservation(ReservationToCreateViewModel viewModel)
         {
             var reservation = viewModel.MapOne<ReservationToCreateDTO>();
             await _reservationMediator.Add(reservation);
-            return ResponseViewModel<bool>.Sucess(true);
+            return ResponseViewModel<bool>.Sucess(true, "Reservation Created");
         }
 
         [HttpGet]
