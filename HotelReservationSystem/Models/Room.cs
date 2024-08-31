@@ -6,14 +6,12 @@ namespace HotelReservationSystem.Models
     {
         public int RoomNumber { get; set; }
         public decimal Price { get; set; }
-        public bool IsAvailable { get; set; } = true;
         public RoomType RoomType { get; set; }
 
         public HashSet<RoomFacility> RoomFacilities { get; set; }
 
         public List<Picture> Pictures { get; set; }
 
-        public Reservation Reservation { get; set; }
-        public int? ReservationId { get; set; }
+        public List<RoomReservation> RoomReservations { get; set; }
     }
 }

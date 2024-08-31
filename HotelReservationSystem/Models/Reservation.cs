@@ -1,11 +1,12 @@
-﻿namespace HotelReservationSystem.Models
+﻿using HotelReservationSystem.Enums;
+
+namespace HotelReservationSystem.Models
 {
     public class Reservation : BaseModel
     {
         public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }
-        public decimal TotalPrice { get; set; }
-        public bool IsCanceled { get; set; } = false;
-        public List<Room> Rooms { get; set; }
+        public ReservationStatus ReservationStatus { get; set; }
+        public List<RoomReservation> RoomReservations { get; set; }
     }
 }

@@ -9,11 +9,11 @@ namespace HotelReservationSystem.Profiles
     {
         public ReservationProfile() 
         {
-            CreateMap<ReservationToCreateDTO, Reservation>()
-                .ForMember(dest => dest.Rooms, opt => opt.MapFrom(src => src.RoomIDs))
-                //.ForMember(dest => dest.NumberOfReservedDays, opt =>
-                //    opt.MapFrom(src => (src.CheckOutDate - src.CheckInDate).Days))
-                .ForMember(dest => dest.IsCanceled, opt => opt.Ignore());
+            CreateMap<ReservationToCreateDTO, Reservation>();
+            //    .ForMember(dest => dest.Rooms, opt => opt.MapFrom(src => src.RoomIDs))
+            //    //.ForMember(dest => dest.NumberOfReservedDays, opt =>
+            //    //    opt.MapFrom(src => (src.CheckOutDate - src.CheckInDate).Days))
+            //    .ForMember(dest => dest.IsCanceled, opt => opt.Ignore());
             CreateMap<ReservationToCreateViewModel, ReservationToCreateDTO>();
 
             CreateMap<ReservationToUpdateDTO, Reservation>().ReverseMap();

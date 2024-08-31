@@ -11,6 +11,7 @@ namespace HotelReservationSystem.Data
         public DbSet<Facility> Facilities { get; set; }
         public DbSet<RoomFacility> RoomFacilities { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<RoomReservation> RoomReservations { get; set; }
 
 
 
