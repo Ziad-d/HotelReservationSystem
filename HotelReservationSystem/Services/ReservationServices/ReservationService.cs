@@ -30,7 +30,7 @@ namespace HotelReservationSystem.Services.ReservationServices
             return reservation;
         }
 
-        public bool ValidateInputDate(DateTime checkIn, DateTime checkOut)
+        private bool ValidateInputDate(DateTime checkIn, DateTime checkOut)
         {
             if (checkIn < DateTime.UtcNow || checkOut < DateTime.UtcNow)
             {
