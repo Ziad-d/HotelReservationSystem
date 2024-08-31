@@ -1,10 +1,9 @@
 ﻿using ExaminationSystem.Helpers;
 using HotelReservationSystem.DTOs.ReservationDTOs;
-using HotelReservationSystem.Models;
 using HotelReservationSystem.Services.ReservationServices;
 using HotelReservationSystem.Services.RoomReservationServices;
 
-namespace HotelReservationSystem.Mediators.ReservationMediator
+namespace HotelReservationSystem.Mediators.ReservationMediators
 {
     public class ReservationMediator : IReservationMediator
     {

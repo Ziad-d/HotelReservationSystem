@@ -1,6 +1,6 @@
 ﻿using HotelReservationSystem.DTOs.ReservationDTOs;
 
-namespace HotelReservationSystem.Mediators.ReservationMediator
+namespace HotelReservationSystem.Mediators.ReservationMediators
 {
     public interface IReservationMediator
     {

@@ -1,10 +1,9 @@
 ﻿using ExaminationSystem.Helpers;
 using HotelReservationSystem.DTOs.ReservationDTOs;
-using HotelReservationSystem.Mediators.ReservationMediator;
+using HotelReservationSystem.Mediators.ReservationMediators;
 using HotelReservationSystem.Services.ReservationServices;
 using HotelReservationSystem.ViewModels;
 using HotelReservationSystem.ViewModels.ReservationViewModels;
-using HotelReservationSystem.ViewModels.RoomViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelReservationSystem.Controllers
