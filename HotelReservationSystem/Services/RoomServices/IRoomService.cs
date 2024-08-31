@@ -8,7 +8,6 @@ namespace HotelReservationSystem.Services.RoomServices
         Task<Room> AddAsync(RoomToCreateDTO roomDTO);
         void Update(int id, RoomToUpdateDTO roomDTO);
         IEnumerable<RoomToReturnDTO> GetRooms();
-        IEnumerable<RoomToReturnDTO> GetAvailableRooms();
         RoomToReturnDTO GetRoomById(int id);
         void Delete(int id);
     }

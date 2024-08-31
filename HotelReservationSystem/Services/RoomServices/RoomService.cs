@@ -30,13 +30,6 @@ namespace HotelReservationSystem.Services.RoomServices
             _unitOfWork.GetRepo<Room>().SaveChanges();
         }
 
-        public IEnumerable<RoomToReturnDTO> GetAvailableRooms()
-        {
-            var availableRooms = _unitOfWork.GetRepo<Room>().Get(r => r.IsAvailable == true);
-
-            return availableRooms.Map<RoomToReturnDTO>();
-        }
-
         public RoomToReturnDTO GetRoomById(int id)
         {
             var room = _unitOfWork.GetRepo<Room>()

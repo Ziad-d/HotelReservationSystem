@@ -15,10 +15,12 @@ namespace HotelReservationSystem.Services.RoomFacilityServices
 
         public void AddFacilitiesToRoom(int roomID, HashSet<int> facilityIDs)
         {
-            var roomFacility = _unitOfWork.GetRepo<RoomFacility>();
+            var roomFacilityRepo = _unitOfWork.GetRepo<RoomFacility>();
+            var roomRepo = _unitOfWork.GetRepo<Room>();
+
             var facilitiesToAdd = _unitOfWork.GetRepo<Facility>()
                 .Get(f => facilityIDs.Contains(f.ID) && 
-                !roomFacility.GetAll()
+                !roomFacilityRepo.GetAll()
                 .Any(rf => rf.RoomId == roomID && rf.FacilityId == f.ID && rf.IsDeleted == false));
             
             if(!facilityIDs.Any())
@@ -26,13 +28,18 @@ namespace HotelReservationSystem.Services.RoomFacilityServices
                 return;
             }
 
-            var room = _unitOfWork.GetRepo<Room>().GetByIDWithTracking(roomID);
+            var room = roomRepo.GetByIDWithTracking(roomID);
 
-            if(room.RoomFacilities == null)
+            if (room == null)
+            {
+                throw new Exception("Room not found");
+            }
+
+            if (room.RoomFacilities == null)
             {
                 room.RoomFacilities = new HashSet<RoomFacility>();
             }
-            // if room == null
+
             foreach(var facility in facilitiesToAdd)
             {
                 room.RoomFacilities.Add(new RoomFacility
@@ -42,8 +49,8 @@ namespace HotelReservationSystem.Services.RoomFacilityServices
                 });
             }
 
-            _unitOfWork.GetRepo<Room>().Update(room);
-            _unitOfWork.GetRepo<Room>().SaveChanges();
+            roomRepo.Update(room);
+            roomRepo.SaveChanges();
         }
     }
 }
