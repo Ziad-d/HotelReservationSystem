@@ -1,5 +1,7 @@
 ﻿using ExaminationSystem.Helpers;
 using HotelReservationSystem.DTOs.ReservationDTOs;
+using HotelReservationSystem.DTOs.RoomDTOs;
+using HotelReservationSystem.Enums;
 using HotelReservationSystem.Models;
 using HotelReservationSystem.Repositories.UnitOfWork;
 
@@ -13,13 +15,36 @@ namespace HotelReservationSystem.Services.ReservationServices
         {
             _unitOfWork = unitOfWork;
         }
-        
-        public void Add(ReservationToCreateDTO reservationDTO)
+
+        public async Task<Reservation> AddAsync(ReservationToCreateDTO reservationDTO)
         {
+            if (!ValidateInputDate(reservationDTO.CheckInDate, reservationDTO.CheckOutDate))
+            {
+                throw new Exception("Invalid check-in or check-out date");
+            }
             var reservation = reservationDTO.MapOne<Reservation>();
-            _unitOfWork.GetRepo<Reservation>().Add(reservation);
-            _unitOfWork.GetRepo<Reservation>().SaveChanges();
+            var reservationRepo = _unitOfWork.GetRepo<Reservation>();
+            await reservationRepo.AddAsync(reservation);
+            reservation.ReservationStatus = ReservationStatus.Pending;
+            reservationRepo.SaveChanges();
+            return reservation;
         }
+
+        public bool ValidateInputDate(DateTime checkIn, DateTime checkOut)
+        {
+            if (checkIn < DateTime.UtcNow || checkOut < DateTime.UtcNow)
+            {
+                return false;
+            }
+
+            if (checkOut <= checkIn)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
 
         public IEnumerable<ReservationToReturnDTO> GetAll()
         {
@@ -36,11 +61,11 @@ namespace HotelReservationSystem.Services.ReservationServices
             return reservation;
         }
 
-        public void CancelReservation(int id)
-        {
-            var reservation = _unitOfWork.GetRepo<Reservation>().GetByIDWithTracking(id);
-            reservation.IsCanceled = true;
-            _unitOfWork.GetRepo<Reservation>().SaveChanges();
-        }
+        //public void CancelReservation(int id)
+        //{
+        //    var reservation = _unitOfWork.GetRepo<Reservation>().GetByIDWithTracking(id);
+        //    reservation.IsCanceled = true;
+        //    _unitOfWork.GetRepo<Reservation>().SaveChanges();
+        //}
     }
 }

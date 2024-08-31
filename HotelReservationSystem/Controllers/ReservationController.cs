@@ -1,6 +1,8 @@
 ﻿using ExaminationSystem.Helpers;
 using HotelReservationSystem.DTOs.ReservationDTOs;
+using HotelReservationSystem.Mediators.ReservationMediator;
 using HotelReservationSystem.Services.ReservationServices;
+using HotelReservationSystem.ViewModels;
 using HotelReservationSystem.ViewModels.ReservationViewModels;
 using HotelReservationSystem.ViewModels.RoomViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -12,18 +14,20 @@ namespace HotelReservationSystem.Controllers
     public class ReservationController : ControllerBase
     {
         private readonly IReservationService _reservationService;
+        private readonly IReservationMediator _reservationMediator;
 
-        public ReservationController(IReservationService reservationService)
+        public ReservationController(IReservationService reservationService, IReservationMediator reservationMediator)
         {
             _reservationService = reservationService;
+            _reservationMediator = reservationMediator;
         }
 
         [HttpPost]
-        public bool CreateReservation(ReservationToCreateViewModel viewModel)
+        public async Task<ResponseViewModel<bool>> CreateReservationWithRooms(ReservationToCreateViewModel viewModel)
         {
             var reservation = viewModel.MapOne<ReservationToCreateDTO>();
-            _reservationService.Add(reservation);
-            return true;
+            await _reservationMediator.Add(reservation);
+            return ResponseViewModel<bool>.Sucess(true);
         }
 
         [HttpGet]
@@ -40,11 +44,11 @@ namespace HotelReservationSystem.Controllers
             return reservation.MapOne<ReservationToReturnViewModel>();
         }
 
-        [HttpPatch]
-        public bool CancelReservation(int id)
-        {
-            _reservationService.CancelReservation(id);
-            return true;
-        }
+        //[HttpPatch]
+        //public bool CancelReservation(int id)
+        //{
+        //    _reservationService.CancelReservation(id);
+        //    return true;
+        //}
     }
 }
