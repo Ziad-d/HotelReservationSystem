@@ -1,6 +1,6 @@
 ﻿using ExaminationSystem.Helpers;
 using HotelReservationSystem.DTOs.RoomDTOs;
-using HotelReservationSystem.Mediators;
+using HotelReservationSystem.Mediators.RoomMediators;
 using HotelReservationSystem.Services.RoomServices;
 using HotelReservationSystem.ViewModels;
 using HotelReservationSystem.ViewModels.RoomViewModels;
@@ -37,24 +37,8 @@ namespace HotelReservationSystem.Controllers
             return ResponseViewModel<RoomToReturnViewModel>.Sucess(mappedRoom);
         }
 
-        [HttpGet]
-        public ResponseViewModel<IEnumerable<RoomToReturnViewModel>> GetAvailableRooms()
-        {
-            var rooms = _roomService.GetAvailableRooms();
-            var mappedRooms = rooms.Select(x => x.MapOne<RoomToReturnViewModel>());
-            return ResponseViewModel<IEnumerable<RoomToReturnViewModel>>.Sucess(mappedRooms);
-        }
-
         [HttpPost]
-        public ResponseViewModel<bool> CreateRoom(RoomToCreateViewModel viewModel)
-        {
-            var room = viewModel.MapOne<RoomToCreateDTO>();
-            var Addedroom = _roomService.AddAsync(room);
-            return ResponseViewModel<bool>.Sucess(true);
-        }
-
-        [HttpPost]
-        public async Task<ResponseViewModel<bool>> CreateRoomWithFacilities(RoomToCreateViewModel viewModel)
+        public async Task<ResponseViewModel<bool>> CreateRoom(RoomToCreateViewModel viewModel)
         {
             var room = viewModel.MapOne<RoomToCreateDTO>();
             await _roomMediator.Add(room);
