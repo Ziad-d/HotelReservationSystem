@@ -6,8 +6,8 @@ namespace HotelReservationSystem.Services.ReservationServices
     public interface IReservationService
     {
         Task<Reservation> AddAsync(ReservationToCreateDTO reservationDTO);
-        IEnumerable<ReservationToReturnDTO> GetAll();
-        ReservationToReturnDTO GetById(int id);
-        //void CancelReservation(int id);
+        IEnumerable<ReservationToReturnDTO> GetAllReservations();
+        ReservationToReturnDTO GetSingleReservation(int id);
+        bool CancelReservation(int reservationId);
     }
 }

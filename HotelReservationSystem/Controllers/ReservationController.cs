@@ -26,28 +26,30 @@ namespace HotelReservationSystem.Controllers
         {
             var reservation = viewModel.MapOne<ReservationToCreateDTO>();
             await _reservationMediator.Add(reservation);
-            return ResponseViewModel<bool>.Sucess(true, "Reservation Created");
+            return ResponseViewModel<bool>.Sucess(true, "Reservation has been Created");
         }
 
         [HttpGet]
-        public IEnumerable<ReservationToReturnViewModel> GetAllReservation()
+        public ResponseViewModel<IEnumerable<ReservationToReturnViewModel>> GetAllReservations()
         {
-            var reservations = _reservationService.GetAll();
-            return reservations.Select(x => x.MapOne<ReservationToReturnViewModel>());
+            var reservations = _reservationService.GetAllReservations();
+            var mappedReservations = reservations.Select(x => x.MapOne<ReservationToReturnViewModel>());
+            return ResponseViewModel<IEnumerable<ReservationToReturnViewModel>>.Sucess(mappedReservations, "Reservations have been retrieved");
         }
 
         [HttpGet("{id}")]
-        public ReservationToReturnViewModel GetReservationById(int id)
+        public ResponseViewModel<ReservationToReturnViewModel> GetSingleReservation(int id)
         {
-            var reservation = _reservationService.GetById(id);
-            return reservation.MapOne<ReservationToReturnViewModel>();
+            var reservation = _reservationService.GetSingleReservation(id);
+            var mappedReservation = reservation.MapOne<ReservationToReturnViewModel>();
+            return ResponseViewModel<ReservationToReturnViewModel>.Sucess(mappedReservation, $"Reservation with ID: '{id}' has been retrieved");
         }
 
-        //[HttpPatch]
-        //public bool CancelReservation(int id)
-        //{
-        //    _reservationService.CancelReservation(id);
-        //    return true;
-        //}
+        [HttpPatch("{id}")]
+        public ResponseViewModel<bool> CancelReservation(int id)
+        {
+            _reservationService.CancelReservation(id);
+            return ResponseViewModel<bool>.Sucess(true, "Reservation Cancelled");
+        }
     }
 }

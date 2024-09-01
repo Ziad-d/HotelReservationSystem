@@ -45,27 +45,45 @@ namespace HotelReservationSystem.Services.ReservationServices
             return true;
         }
 
-
-        public IEnumerable<ReservationToReturnDTO> GetAll()
+        public IEnumerable<ReservationToReturnDTO> GetAllReservations()
         {
             var reservations = _unitOfWork.GetRepo<Reservation>().GetAll();
             return reservations.Map<ReservationToReturnDTO>();
         }
 
-        public ReservationToReturnDTO GetById(int id)
+        public ReservationToReturnDTO GetSingleReservation(int id)
         {
-            var reservation = _unitOfWork.GetRepo<Reservation>()
-                .GetByID(id)
-                .Map<ReservationToReturnDTO>()
-                .FirstOrDefault();
-            return reservation;
+            var reservationRepo = _unitOfWork.GetRepo<Reservation>();
+            var reservation = reservationRepo.GetByID(id);
+            if (reservation == null)
+            {
+                throw new Exception("Reservation not found");
+            }
+            var mappedReservation = reservation.Map<ReservationToReturnDTO>().FirstOrDefault();
+            return mappedReservation;
         }
 
-        //public void CancelReservation(int id)
-        //{
-        //    var reservation = _unitOfWork.GetRepo<Reservation>().GetByIDWithTracking(id);
-        //    reservation.IsCanceled = true;
-        //    _unitOfWork.GetRepo<Reservation>().SaveChanges();
-        //}
+        public bool CancelReservation(int reservationId)
+        {
+            var reservationRepo = _unitOfWork.GetRepo<Reservation>();
+            var reservation = reservationRepo.GetByIDWithTracking(reservationId);
+
+            if (reservation == null)
+            {
+                return false;
+            }
+
+            if (reservation.ReservationStatus == ReservationStatus.Cancelled)
+            {
+                return false;
+            }
+
+            reservation.ReservationStatus = ReservationStatus.Cancelled;
+
+            reservationRepo.Update(reservation);
+            reservationRepo.SaveChanges();
+
+            return true;
+        }
     }
 }
