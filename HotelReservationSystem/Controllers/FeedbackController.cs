@@ -3,6 +3,7 @@ using ExaminationSystem.Helpers;
 using HotelReservationSystem.DTOs.FeedbackDTOs;
 using HotelReservationSystem.Models;
 using HotelReservationSystem.Services.FeedbackServices;
+using HotelReservationSystem.ViewModels;
 using HotelReservationSystem.ViewModels.FeedbackViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,11 +21,12 @@ namespace HotelReservationSystem.Controllers
         }
         [HttpGet]
 
-        public IEnumerable<FeedbackToReturnViewModel> GetAllFeedbacks()
+        public ResponseViewModel<IEnumerable<FeedbackToReturnViewModel>> GetAllFeedbacks()
         {
 
             var feedbacks = _feedbackService.GetAll();
-            return feedbacks.Select(x => x.MapOne<FeedbackToReturnViewModel>());
+            var mappedFeedbacks= feedbacks.Select(x => x.MapOne<FeedbackToReturnViewModel>());
+            return ResponseViewModel<IEnumerable<FeedbackToReturnViewModel>>.Sucess(mappedFeedbacks);
         }
 
         [HttpDelete]
@@ -37,18 +39,19 @@ namespace HotelReservationSystem.Controllers
         }
 
         [HttpGet("id")]
-        public FeedbackToReturnViewModel GetFeedbackById(int id)
+        public ResponseViewModel<FeedbackToReturnViewModel> GetFeedbackById(int id)
         {
             var feedback = _feedbackService.GetById(id);
-            return feedback.MapOne<FeedbackToReturnViewModel>();
+            var mappedFeedback = feedback.MapOne<FeedbackToReturnViewModel>();
+            return ResponseViewModel<FeedbackToReturnViewModel>.Sucess(mappedFeedback);
         }
 
         [HttpPost]
-        public bool CreateFeedback(FeedbackToCreateViewModel feedbackToCreateViewModel)
+        public ResponseViewModel<bool> CreateFeedback(FeedbackToCreateViewModel feedbackToCreateViewModel)
         {
             var feedback = feedbackToCreateViewModel.MapOne<FeedbackToCreateDTO>();
-            _feedbackService.Add(feedback);
-            return true ;
+             _feedbackService.Add(feedback);
+            return ResponseViewModel<bool>.Sucess(true) ;
         }
     }
 }

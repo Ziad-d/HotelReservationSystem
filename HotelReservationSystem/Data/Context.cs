@@ -31,6 +31,21 @@ namespace HotelReservationSystem.Data
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
+
+        //    modelBuilder.Entity<Feedback>()
+        //        .Property(p => p.Rating)
+        //        .HasDefaultValue(1)
+        //        .IsRequired();
+               
+        //    ApplyRatingRangeConstraints(modelBuilder);
+        //
         }
+
+        //private void ApplyRatingRangeConstraints(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Feedback>()
+        //        .HasCheckConstraint("CK_Rating", "Rating BETWEEN 1 AND 5");
+                
+        //}
     }
 }

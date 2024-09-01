@@ -8,7 +8,6 @@ namespace HotelReservationSystem.Services.FeedbackServices
         void Add(FeedbackToCreateDTO feedbackToCreateDTO);
         IEnumerable<FeedbackToReturnDTO> GetAll();
         FeedbackToReturnDTO GetById(int id);
-        void Update(int id, FeedbackToUpdateDTO feedbackToUpdateDTO);
         void Delete(int id);
        
     }

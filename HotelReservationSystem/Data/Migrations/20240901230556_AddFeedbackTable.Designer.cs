@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelReservationSystem.Data.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20240901101635_AddFeedbackTable")]
+    [Migration("20240901230556_AddFeedbackTable")]
     partial class AddFeedbackTable
     {
         /// <inheritdoc />

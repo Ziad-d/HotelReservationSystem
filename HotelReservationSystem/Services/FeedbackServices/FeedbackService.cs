@@ -17,8 +17,9 @@ namespace HotelReservationSystem.Services.FeedbackServices
         }
         public void Add(FeedbackToCreateDTO feedbackToCreateDTO)
         {
-            var feedback = feedbackToCreateDTO.MapOne<Feedback>();
-            _unitOfWork.GetRepo<Feedback>().Add(feedback);
+        
+            var feedback = feedbackToCreateDTO.MapOne<Feedback>() ;
+             _unitOfWork.GetRepo<Feedback>().Add(feedback);
             _unitOfWork.GetRepo<Feedback>().SaveChanges();
 
         }
@@ -46,10 +47,6 @@ namespace HotelReservationSystem.Services.FeedbackServices
             return feedback;
         }
 
-        public void Update(int id, FeedbackToUpdateDTO feedbackToUpdateDTO)
-        {
-            throw new NotImplementedException();
-        }
     }
 
 }

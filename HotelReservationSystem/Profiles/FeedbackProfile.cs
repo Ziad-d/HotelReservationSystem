@@ -15,8 +15,7 @@ namespace HotelReservationSystem.Profiles
             CreateMap<FeedbackToReturnDTO, Feedback>().ReverseMap();
             CreateMap<FeedbackToReturnViewModel, FeedbackToReturnDTO>().ReverseMap();
 
-            CreateMap<FeedbackToUpdateDTO, Feedback>().ReverseMap();
-            CreateMap<FeedbackToUpdateViewModel, FeedbackToUpdateDTO>().ReverseMap();
+           
         }
     }
 }
