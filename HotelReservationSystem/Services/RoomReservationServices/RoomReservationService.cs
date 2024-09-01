@@ -1,4 +1,6 @@
-﻿using HotelReservationSystem.Models;
+﻿using ExaminationSystem.Helpers;
+using HotelReservationSystem.DTOs.RoomDTOs;
+using HotelReservationSystem.Models;
 using HotelReservationSystem.Repositories.UnitOfWork;
 
 namespace HotelReservationSystem.Services.RoomReservationServices
@@ -51,5 +53,27 @@ namespace HotelReservationSystem.Services.RoomReservationServices
             reservationRepo.SaveChanges();
         }
 
+        public IEnumerable<RoomToReturnDTO> GetReservedRoomsByReservationId(int reservationId)
+        {
+            if (reservationId <= 0)
+            {
+                throw new ArgumentException("Invalid reservation ID");
+            }
+            var roomReservationRepo = _unitOfWork.GetRepo<RoomReservation>();
+            var roomRepo = _unitOfWork.GetRepo<Room>();
+
+            var roomReservations = roomReservationRepo.Get(rr =>  rr.ReservationId == reservationId && !rr.IsDeleted);
+
+            if (!roomReservations.Any())
+            {
+                throw new KeyNotFoundException("No rooms found for the given reservation ID.");
+            }
+
+            var roomIds = roomReservations.Select(rr => rr.RoomId).ToList();
+
+            var rooms = roomRepo.Get(r => roomIds.Contains(r.ID));
+
+            return rooms.Select(x => x.MapOne<RoomToReturnDTO>());
+        }
     }
 }
