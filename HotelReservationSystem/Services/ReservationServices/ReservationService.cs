@@ -45,6 +45,30 @@ namespace HotelReservationSystem.Services.ReservationServices
             return true;
         }
 
+        public int GetReservationCount(ReservationFilterDTO filter)
+        {
+            var reservationRepo = _unitOfWork.GetRepo<Reservation>();
+
+            var query = reservationRepo.GetAll();
+
+            if (filter.CheckInDate.HasValue)
+            {
+                query = query.Where(r => r.CheckInDate >= filter.CheckInDate.Value);
+            }
+
+            if (filter.CheckOutDate.HasValue)
+            {
+                query = query.Where(r => r.CheckOutDate <= filter.CheckOutDate.Value);
+            }
+
+            if (filter.ReservationStatus.HasValue)
+            {
+                query = query.Where(r => r.ReservationStatus == filter.ReservationStatus.Value);
+            }
+
+            return query.Count();
+        }
+
 
         public IEnumerable<ReservationToReturnDTO> GetAll()
         {
