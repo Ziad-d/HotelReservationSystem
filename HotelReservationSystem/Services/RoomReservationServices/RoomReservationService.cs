@@ -1,4 +1,5 @@
-﻿using ExaminationSystem.Helpers;
+﻿using ExaminationSystem.Exceptions;
+using ExaminationSystem.Helpers;
 using HotelReservationSystem.DTOs.RoomDTOs;
 using HotelReservationSystem.Models;
 using HotelReservationSystem.Repositories.UnitOfWork;
@@ -23,7 +24,7 @@ namespace HotelReservationSystem.Services.RoomReservationServices
             var reservation = reservationRepo.GetByIDWithTracking(reservationID);
             if (reservation == null)
             {
-                throw new Exception("Reservation not found");
+                throw new BusinessException(ErrorCode.ReservationNotFound, "Reservation not found");
             }
 
             var roomsToAdd = roomRepo.Get(r => roomsNumber.Contains(r.RoomNumber) &&
@@ -57,7 +58,7 @@ namespace HotelReservationSystem.Services.RoomReservationServices
         {
             if (reservationId <= 0)
             {
-                throw new ArgumentException("Invalid reservation ID");
+                throw new BusinessException(ErrorCode.NotValidReservationID, "Invalid reservation ID");
             }
             var roomReservationRepo = _unitOfWork.GetRepo<RoomReservation>();
             var roomRepo = _unitOfWork.GetRepo<Room>();
@@ -66,7 +67,7 @@ namespace HotelReservationSystem.Services.RoomReservationServices
 
             if (!roomReservations.Any())
             {
-                throw new KeyNotFoundException("No rooms found for the given reservation ID.");
+                throw new BusinessException(ErrorCode.RoomNotFound, "No rooms found for the given reservation ID.");
             }
 
             var roomIds = roomReservations.Select(rr => rr.RoomId).ToList();
@@ -74,6 +75,31 @@ namespace HotelReservationSystem.Services.RoomReservationServices
             var rooms = roomRepo.Get(r => roomIds.Contains(r.ID));
 
             return rooms.Select(x => x.MapOne<RoomToReturnDTO>());
+        }
+
+        public IEnumerable<RoomToReturnDTO> GetAvailableRooms(DateTime checkInDate, DateTime checkOutDate)
+        {
+            var roomRepo = _unitOfWork.GetRepo<Room>();
+            var reservationRepo = _unitOfWork.GetRepo<Reservation>();
+            var roomReservationRepo = _unitOfWork.GetRepo<RoomReservation>();
+
+            if (!reservationRepo.ValidateInputDate(checkInDate, checkOutDate))
+            {
+                throw new BusinessException(ErrorCode.NotValidDates, "Invalid check-in or check-out date");
+            }
+
+            var allRooms = roomRepo.GetAll();
+
+            var overlappingReservations = roomReservationRepo.Get(rr =>
+                (rr.Reservation.CheckInDate < checkOutDate && rr.Reservation.CheckOutDate > checkInDate) &&
+                !rr.IsDeleted
+            ).ToList();
+
+            var reservedRoomIds = overlappingReservations.Select(rr => rr.RoomId).ToHashSet();
+
+            var availableRooms = allRooms.Where(room => !reservedRoomIds.Contains(room.ID)).ToList();
+
+            return availableRooms.Select(x => x.MapOne<RoomToReturnDTO>());
         }
     }
 }

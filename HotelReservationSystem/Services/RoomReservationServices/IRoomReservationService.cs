@@ -6,5 +6,6 @@ namespace HotelReservationSystem.Services.RoomReservationServices
     {
         void ReserveRooms(int reservationID, List<int> roomsNumber);
         IEnumerable<RoomToReturnDTO> GetReservedRoomsByReservationId(int reservationId);
+        IEnumerable<RoomToReturnDTO> GetAvailableRooms(DateTime checkInDate, DateTime checkOutDate);
     }
 }

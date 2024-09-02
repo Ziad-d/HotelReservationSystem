@@ -48,6 +48,14 @@ namespace HotelReservationSystem.Controllers
             return ResponseViewModel<IEnumerable<RoomToReturnViewModel>>.Sucess(mappedRooms, $"Rooms with reservation ID: '{reservationId}' have been retrieved");
         }
 
+        [HttpGet]
+        public ResponseViewModel<IEnumerable<RoomToReturnViewModel>> GetAvailableRooms(DateTime checkInDate, DateTime checkOutDate)
+        {
+            var rooms = _roomReservationService.GetAvailableRooms(checkInDate, checkOutDate);
+            var mappedRooms = rooms.Select(x => x.MapOne<RoomToReturnViewModel>());
+            return ResponseViewModel<IEnumerable<RoomToReturnViewModel>>.Sucess(mappedRooms, "Available rooms have been retrieved");
+        }
+
         [HttpPost]
         public async Task<ResponseViewModel<bool>> CreateRoom(RoomToCreateViewModel viewModel)
         {
