@@ -17,6 +17,7 @@ namespace HotelReservationSystem.Repositories
         void Delete(T entity);
         void Delete(int id);
         void HardDelete(int id);
+        bool ValidateInputDate(DateTime checkIn, DateTime checkOut);
         void SaveChanges();
     }
 }

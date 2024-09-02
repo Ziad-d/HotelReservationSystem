@@ -1,4 +1,5 @@
-﻿using ExaminationSystem.Helpers;
+﻿using ExaminationSystem.Exceptions;
+using ExaminationSystem.Helpers;
 using HotelReservationSystem.DTOs.ReservationDTOs;
 using HotelReservationSystem.DTOs.RoomDTOs;
 using HotelReservationSystem.Enums;
@@ -18,31 +19,16 @@ namespace HotelReservationSystem.Services.ReservationServices
 
         public async Task<Reservation> AddAsync(ReservationToCreateDTO reservationDTO)
         {
-            if (!ValidateInputDate(reservationDTO.CheckInDate, reservationDTO.CheckOutDate))
+            var reservationRepo = _unitOfWork.GetRepo<Reservation>();
+            if (!reservationRepo.ValidateInputDate(reservationDTO.CheckInDate, reservationDTO.CheckOutDate))
             {
-                throw new Exception("Invalid check-in or check-out date");
+                throw new BusinessException(ErrorCode.NotValidDates, "Invalid check-in or check-out date");
             }
             var reservation = reservationDTO.MapOne<Reservation>();
-            var reservationRepo = _unitOfWork.GetRepo<Reservation>();
             await reservationRepo.AddAsync(reservation);
             reservation.ReservationStatus = ReservationStatus.Pending;
             reservationRepo.SaveChanges();
             return reservation;
-        }
-
-        private bool ValidateInputDate(DateTime checkIn, DateTime checkOut)
-        {
-            if (checkIn < DateTime.UtcNow || checkOut < DateTime.UtcNow)
-            {
-                return false;
-            }
-
-            if (checkOut <= checkIn)
-            {
-                return false;
-            }
-
-            return true;
         }
 
         public IEnumerable<ReservationToReturnDTO> GetAllReservations()
@@ -57,7 +43,7 @@ namespace HotelReservationSystem.Services.ReservationServices
             var reservation = reservationRepo.GetByID(id);
             if (reservation == null)
             {
-                throw new Exception("Reservation not found");
+                throw new BusinessException(ErrorCode.ReservationNotFound, "Reservation not found");
             }
             var mappedReservation = reservation.Map<ReservationToReturnDTO>().FirstOrDefault();
             return mappedReservation;
@@ -68,15 +54,7 @@ namespace HotelReservationSystem.Services.ReservationServices
             var reservationRepo = _unitOfWork.GetRepo<Reservation>();
             var reservation = reservationRepo.GetByIDWithTracking(reservationId);
 
-            if (reservation == null)
-            {
-                return false;
-            }
-
-            if (reservation.ReservationStatus == ReservationStatus.Cancelled)
-            {
-                return false;
-            }
+            ValidateReservationForCancellation(reservation);
 
             reservation.ReservationStatus = ReservationStatus.Cancelled;
 
@@ -84,6 +62,19 @@ namespace HotelReservationSystem.Services.ReservationServices
             reservationRepo.SaveChanges();
 
             return true;
+        }
+
+        private void ValidateReservationForCancellation(Reservation reservation)
+        {
+            if (reservation == null)
+            {
+                throw new BusinessException(ErrorCode.ReservationNotFound, "Reservation not found");
+            }
+
+            if (reservation.ReservationStatus == ReservationStatus.Cancelled)
+            {
+                throw new BusinessException(ErrorCode.ReservationWasCancelled, "Reservation was already cancelled");
+            }
         }
     }
 }
