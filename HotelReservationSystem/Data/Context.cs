@@ -17,7 +17,8 @@ namespace HotelReservationSystem.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=HotelReservationSystem;TrustServerCertificate=true")
+            //optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=HotelReservationSystem;TrustServerCertificate=true")
+            optionsBuilder.UseSqlServer("Server=.;Database=HotelReservation;User Id=sa;Password=123;Encrypt=False;;TrustServerCertificate=true")
                 .LogTo(log => Debug.WriteLine(log), LogLevel.Information)
                 .EnableSensitiveDataLogging();
         }
