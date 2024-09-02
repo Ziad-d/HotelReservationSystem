@@ -7,7 +7,9 @@
 
         RoomNotFound = 1000,
 
-        NotValidReservationCheckInDate = 2000,
-        
+        ReservationNotFound = 2000,
+        NotValidReservationID = 2001,
+        NotValidDates = 2002,
+        ReservationWasCancelled = 2003
     }
 }
