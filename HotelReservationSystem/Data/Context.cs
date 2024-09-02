@@ -12,6 +12,7 @@ namespace HotelReservationSystem.Data
         public DbSet<RoomFacility> RoomFacilities { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<RoomReservation> RoomReservations { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
 
 
 
@@ -31,6 +32,21 @@ namespace HotelReservationSystem.Data
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
+
+        //    modelBuilder.Entity<Feedback>()
+        //        .Property(p => p.Rating)
+        //        .HasDefaultValue(1)
+        //        .IsRequired();
+               
+        //    ApplyRatingRangeConstraints(modelBuilder);
+        //
         }
+
+        //private void ApplyRatingRangeConstraints(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Feedback>()
+        //        .HasCheckConstraint("CK_Rating", "Rating BETWEEN 1 AND 5");
+                
+        //}
     }
 }
