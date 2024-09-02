@@ -43,6 +43,12 @@ namespace HotelReservationSystem.Controllers
             return reservation.MapOne<ReservationToReturnViewModel>();
         }
 
+        [HttpPost]
+        public int GetReservationCount(ReservationFilterDTO filter)
+        {
+            return _reservationService.GetReservationCount(filter);
+        }
+
         //[HttpPatch]
         //public bool CancelReservation(int id)
         //{
