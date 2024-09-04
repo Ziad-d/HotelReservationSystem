@@ -1,6 +1,7 @@
 ﻿using ExaminationSystem.Exceptions;
 using ExaminationSystem.Helpers;
 using HotelReservationSystem.DTOs.RoomDTOs;
+using HotelReservationSystem.Helpers;
 using HotelReservationSystem.Models;
 using HotelReservationSystem.Repositories.UnitOfWork;
 
@@ -83,7 +84,7 @@ namespace HotelReservationSystem.Services.RoomReservationServices
             var reservationRepo = _unitOfWork.GetRepo<Reservation>();
             var roomReservationRepo = _unitOfWork.GetRepo<RoomReservation>();
 
-            if (!reservationRepo.ValidateInputDate(checkInDate, checkOutDate))
+            if (ValidateDates.ValidateInputDate(checkInDate, checkOutDate))
             {
                 throw new BusinessException(ErrorCode.NotValidDates, "Invalid check-in or check-out date");
             }

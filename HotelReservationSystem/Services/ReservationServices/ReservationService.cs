@@ -3,6 +3,7 @@ using ExaminationSystem.Helpers;
 using HotelReservationSystem.DTOs.ReservationDTOs;
 using HotelReservationSystem.DTOs.RoomDTOs;
 using HotelReservationSystem.Enums;
+using HotelReservationSystem.Helpers;
 using HotelReservationSystem.Models;
 using HotelReservationSystem.Repositories.UnitOfWork;
 
@@ -20,7 +21,7 @@ namespace HotelReservationSystem.Services.ReservationServices
         public async Task<Reservation> AddAsync(ReservationToCreateDTO reservationDTO)
         {
             var reservationRepo = _unitOfWork.GetRepo<Reservation>();
-            if (!reservationRepo.ValidateInputDate(reservationDTO.CheckInDate, reservationDTO.CheckOutDate))
+            if (ValidateDates.ValidateInputDate(reservationDTO.CheckInDate, reservationDTO.CheckOutDate))
             {
                 throw new BusinessException(ErrorCode.NotValidDates, "Invalid check-in or check-out date");
             }

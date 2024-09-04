@@ -75,21 +75,6 @@ namespace HotelReservationSystem.Repositories
             _context.Set<T>().Where(x => x.ID == id).ExecuteDelete();
         }
 
-        public bool ValidateInputDate(DateTime checkIn, DateTime checkOut)
-        {
-            if (checkIn < DateTime.UtcNow || checkOut < DateTime.UtcNow)
-            {
-                return false;
-            }
-
-            if (checkOut <= checkIn)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
         public void SaveChanges()
         {
             _context.SaveChanges();
