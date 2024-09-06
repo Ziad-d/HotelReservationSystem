@@ -19,8 +19,10 @@ namespace HotelReservationSystem.Profiles
             CreateMap<ReservationToUpdateDTO, Reservation>().ReverseMap();
             CreateMap<ReservationToUpdateViewModel, ReservationToUpdateDTO>();
 
-            CreateMap<ReservationToReturnDTO, Reservation>().ReverseMap();
-            CreateMap<ReservationToReturnViewModel, ReservationToReturnDTO>().ReverseMap();
+            CreateMap<Reservation, ReservationToReturnDTO>()
+            .ForMember(dest => dest.RoomsNumber, opt =>
+            opt.MapFrom(src => src.RoomReservations.Select(rr => rr.Room.RoomNumber)));
+            CreateMap<ReservationToReturnDTO, ReservationToReturnViewModel>();
         }
     }
 }
