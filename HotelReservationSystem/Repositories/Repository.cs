@@ -43,6 +43,11 @@ namespace HotelReservationSystem.Repositories
             return GetAll().Where(predicate).Select(selector);
         }
 
+        public async Task<T> First(Expression<Func<T, bool>> predicate)
+        {
+            return await Get(predicate).FirstOrDefaultAsync();
+        }
+
         public void Add(T entity)
         {
             _context.Set<T>().Add(entity);

@@ -11,6 +11,7 @@ namespace HotelReservationSystem.Repositories
             Expression<Func<T, TResult>> selector);
         IQueryable<T> GetByID(int id);
         T GetByIDWithTracking(int id);
+        Task<T> First(Expression<Func<T, bool>> predicate);
         void Add(T entity);
         Task AddAsync(T entity);
         void Update(T entity);

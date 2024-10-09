@@ -4,6 +4,7 @@
     {
         None = 0,
         UnKnown = 1,
+        RoleNotFound = 2,
 
         RoomNotFound = 1000,
 

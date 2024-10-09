@@ -12,8 +12,10 @@ namespace HotelReservationSystem.Data
         public DbSet<RoomFacility> RoomFacilities { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<RoomReservation> RoomReservations { get; set; }
-
-
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<RoleFeature> RoleFeatures { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
