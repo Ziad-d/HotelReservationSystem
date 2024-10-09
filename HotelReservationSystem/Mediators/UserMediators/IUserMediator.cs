@@ -6,5 +6,6 @@ namespace HotelReservationSystem.Mediators.UserMediators
     {
         Task<string> LoginAsync(UserLoginDTO loginDTO);
         Task<string> RegisterAsync(UserRegisterDTO registerDTO);
+        Task<dynamic> AssignRolesToUser(RolesToUserDTO rolesToUserDTO);
     }
 }

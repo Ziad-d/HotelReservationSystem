@@ -19,5 +19,6 @@ namespace HotelReservationSystem.Repositories
         void Delete(int id);
         void HardDelete(int id);
         void SaveChanges();
+        Task SaveChangesAsync();
     }
 }

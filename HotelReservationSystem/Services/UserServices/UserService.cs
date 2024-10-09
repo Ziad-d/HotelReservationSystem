@@ -52,5 +52,11 @@ namespace HotelReservationSystem.Services.UserServices
 
             return user;
         }
+
+        public async Task<User> GetUserById(int id)
+        {
+            var user = await _unitOfWork.GetRepo<User>().First(u => u.ID == id);
+            return user;
+        }
     }
 }

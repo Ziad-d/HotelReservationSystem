@@ -1,4 +1,5 @@
-﻿using ExaminationSystem.Exceptions;
+﻿using Azure.Core;
+using ExaminationSystem.Exceptions;
 using ExaminationSystem.Helpers;
 using HotelReservationSystem.DTOs.RoleDTOs;
 using HotelReservationSystem.Models;
@@ -14,11 +15,31 @@ namespace HotelReservationSystem.Services.RoleServices
         {
             _unitOfWork = unitOfWork;
         }
-        public RoleToReturnDTO GetRoleById(int id)
+        public async Task<RoleToReturnDTO> GetRoleById(int id)
         {
-            var room = _unitOfWork.GetRepo<Room>().GetByID(id) ?? throw new BusinessException(ErrorCode.RoomNotFound, "Room not found");
-            var mappedRoom = room.Map<RoleToReturnDTO>().FirstOrDefault();
-            return mappedRoom;
+            var role = _unitOfWork.GetRepo<Role>().GetByID(id) ?? throw new BusinessException(ErrorCode.RoomNotFound, "Room not found");
+            var mappedRole = role.Map<RoleToReturnDTO>().FirstOrDefault();
+            return mappedRole;
+        }
+
+        public async Task<Role> AddRole(RoleToCreateDTO roleToCreateDTO)
+        {
+            if (roleToCreateDTO.Name == null)
+            {
+                throw new BusinessException(ErrorCode.RoleNotFound, "No name was provided");
+
+            }
+            var roleFound = await _unitOfWork.GetRepo<Role>().First(r => r.Name == roleToCreateDTO.Name);
+
+            if (roleFound is not null)
+            {
+                throw new BusinessException(ErrorCode.None, "Role already exists");
+            }
+
+            var role = roleToCreateDTO.MapOne<Role>();
+            await _unitOfWork.GetRepo<Role>().AddAsync(role);
+            await _unitOfWork.GetRepo<Role>().SaveChangesAsync();
+            return role;
         }
     }
 }

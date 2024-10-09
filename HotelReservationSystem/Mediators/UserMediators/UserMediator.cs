@@ -1,6 +1,8 @@
 ﻿using ExaminationSystem.Helpers;
+using HotelReservationSystem.DTOs.RoleDTOs;
 using HotelReservationSystem.DTOs.UserDTOs;
 using HotelReservationSystem.Helpers;
+using HotelReservationSystem.Services.UserRoleServices;
 using HotelReservationSystem.Services.UserServices;
 
 namespace HotelReservationSystem.Mediators.UserMediators
@@ -8,10 +10,12 @@ namespace HotelReservationSystem.Mediators.UserMediators
     public class UserMediator : IUserMediator
     {
         private readonly IUserService _userService;
+        private readonly IUserRoleService _userRoleService;
 
-        public UserMediator(IUserService userService)
+        public UserMediator(IUserService userService, IUserRoleService userRoleService)
         {
             _userService = userService;
+            _userRoleService = userRoleService;
         }
         public async Task<string> LoginAsync(UserLoginDTO loginDTO)
         {
@@ -50,6 +54,24 @@ namespace HotelReservationSystem.Mediators.UserMediators
             var token = TokenGenerator.GenerateToken(userForToken);
 
             return token;
+        }
+
+        public async Task<dynamic> AssignRolesToUser(RolesToUserDTO rolesToUserDTO)
+        {
+            if (rolesToUserDTO == null || rolesToUserDTO.RoleIds.Any())
+            {
+                return "Invalid Inputs";
+            }
+
+            var user = await _userService.GetUserById(rolesToUserDTO.UserId);
+            if (user == null)
+            {
+                return "Invalid UserID!";
+            }
+
+            await _userRoleService.AddRolesToUser(rolesToUserDTO);
+
+            return "Roles assigned to user successfully!";
         }
     }
 }

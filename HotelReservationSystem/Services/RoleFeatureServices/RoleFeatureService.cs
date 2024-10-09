@@ -1,4 +1,6 @@
-﻿using Azure.Core;
+﻿using AutoMapper.Features;
+using Azure.Core;
+using HotelReservationSystem.DTOs.RoleDTOs;
 using HotelReservationSystem.Enums;
 using HotelReservationSystem.Models;
 using HotelReservationSystem.Repositories.UnitOfWork;
@@ -23,6 +25,28 @@ namespace HotelReservationSystem.Services.RoleFeatureServices
                         .AnyAsync();
 
             return hasAccess;
+        }
+
+        public async Task AddFeaturesToRole(FeaturesToRoleDTO featuresToRoleDTO)
+        {
+            foreach (var feature in featuresToRoleDTO.Features)
+            {
+                var existingRoleFeature = await _unitOfWork.GetRepo<RoleFeature>().First(
+                            rf => rf.RoleID == featuresToRoleDTO.RoleId && rf.Feature == feature
+                        );
+
+                if (existingRoleFeature == null)
+                {
+                    var roleFeature = new RoleFeature
+                    {
+                        RoleID = featuresToRoleDTO.RoleId,
+                        Feature = feature
+                    };
+
+                    await _unitOfWork.GetRepo<RoleFeature>().AddAsync(roleFeature);
+                }
+            }
+            await _unitOfWork.GetRepo<RoleFeature>().SaveChangesAsync();
         }
     }
 }

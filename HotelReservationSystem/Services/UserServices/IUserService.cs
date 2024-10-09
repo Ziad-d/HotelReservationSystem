@@ -9,5 +9,6 @@ namespace HotelReservationSystem.Services.UserServices
         Task<bool> CheckUserPasswordAsync(User user, string password);
         Task<User> FindUserByUserNameAsync(string username);
         Task<User> CreateUserAsync(UserRegisterDTO registerDTO);
+        Task<User> GetUserById(int id);
     }
 }
