@@ -5,6 +5,7 @@ namespace HotelReservationSystem.Repositories
 {
     public interface IRepository<T> where T : BaseModel
     {
+        Task<bool> AnyAsync(Expression<Func<T, bool>> predicate);
         IQueryable<T> GetAll();
         IQueryable<T> Get(Expression<Func<T, bool>> predicate);
         IQueryable<TResult> Get<TResult>(Expression<Func<T, bool>> predicate,

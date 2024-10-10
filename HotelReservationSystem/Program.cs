@@ -5,6 +5,10 @@ using HotelReservationSystem.Profiles;
 using AutoMapper;
 using ExaminationSystem.Helpers;
 using ExaminationSystem.Middlewares;
+using HotelReservationSystem.Repositories.UnitOfWork;
+using HotelReservationSystem.Data;
+using Microsoft.EntityFrameworkCore;
+using HotelReservationSystem.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +35,23 @@ MapperHelper.Mapper = app.Services.GetService<IMapper>();
 app.UseMiddleware<GlobalErrorHandlerMiddleware>();
 app.UseMiddleware<TransactionMiddleware>();
 
+#region Apply All Pending Migrations[Update-Database] and Data Seeding
+using var scoped = app.Services.CreateScope();
+var services = scoped.ServiceProvider;
+var _dbcontext = services.GetRequiredService<Context>();
+var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+var _unitOfWork = services.GetRequiredService<IUnitOfWork>();
+try
+{
+    await _dbcontext.Database.MigrateAsync();
+    await ContextSeed.SeedRolesAsync(_unitOfWork, builder.Configuration);
+}
+catch (Exception ex)
+{
+    var logger = loggerFactory.CreateLogger<Program>();
+    logger.LogError(ex, "an error has been occured during apply the migration");
+}
+#endregion
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

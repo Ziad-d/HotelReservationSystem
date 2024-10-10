@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace DynamicAuth_RBAC_.Helpers
+namespace HotelReservationSystem.Helpers
 {
     public static class PasswordHelper
     {

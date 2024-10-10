@@ -14,6 +14,11 @@ namespace HotelReservationSystem.Repositories
             _context = context; 
         }
 
+        public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _context.Set<T>().AnyAsync(predicate);
+        }
+
         public IQueryable<T> GetAll()
         {
             return _context.Set<T>().Where(x => !x.IsDeleted);
